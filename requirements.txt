@@ -1,5 +1,6 @@
 Flask
 langchain 
 openai
-
+langchain-openai
+python-dotenv
 
