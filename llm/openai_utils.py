@@ -1,5 +1,4 @@
 from openai import OpenAI 
-import os 
 import dotenv
 
 dotenv.load_dotenv()
@@ -14,6 +13,7 @@ def get_completion(form_input):
         {"role": "user", "content": form_input}
       ]
     )
+    print(f"SKJDFHSIUFGHDFUISDAHFDASUIFGDKSHFKCompletion is {completion}")
 
     return completion.choices[0].message
 
