@@ -2,108 +2,141 @@
 
 {% block content %}
 
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
 <style>
-  @keyframes typing {
-    from { width: 0; }
-    to { width: 100%; }
+  .typewriter h1 {
+    color: black;
+    overflow: hidden;
+    border-right: 0.15em solid black;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 1.0s steps(30, end), blink-caret 0.5s step-end infinite;
   }
 
-  .typing-animation {
-    overflow: hidden;
-    white-space: nowrap;
-    animation: typing 1s steps(40, end);
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink-caret {
+    from,
+    to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: black;
+    }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-in forwards;
+  }
+
+  @keyframes fadeInAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
 </style>
 
-
-
 <div class="row justify-content-center">
-
-  {# Leftmost form. This is the chatbot #}
-  <div class="col-md-6">
-    <div class="card">
-
-      <div class="card-body d-flex flex-column justify-content-center align-items-center" style="height: 80vh; overflow-y: auto;">
-        <div style="width: 40%; padding-top: 40%; position: relative; margin-bottom: 20px; border-radius: 50%; overflow: hidden;">
-          <iframe src="https://gifer.com/embed/75lD" width="100%" height="100%" style="position: absolute; top: 0; left: 0;" frameBorder="0" allowFullScreen></iframe>
-        </div>
-        <div class="text-center">
-          <h3>Hello, human. I'm here to help you get swole. Let's build a system around you.</h3>
-        </div>
-  
-        <div class="text-center mt-5">
-          <h6 class="typing-animation">What is your present weight and goal weight?</h6>
-        </div>
-
-        {% if result %}
-          <div id="response">{{ result }}</div>
-        {% endif %}
-
-      </div>
-
-      <div class="card-footer">
-
-          <form hx-post="/generate" hx-target="#response">
-              <div class="input-group">
-                  <input type="text" class="form-control" name="user_input" placeholder="Type your message...">
-                  <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">Send</button>
-                  </div>
-              </div>
-          </form>
-
-          <div id="response">{{ result }}</div>
-      </div>
-
-    </div>
-  </div>
-
-  {# Rightmost form. This is the user build #}
   <div class="col-md-6">
     <div class="card">
       <div class="card-body" style="height: 86vh; overflow-y: auto;">
 
+        <div class="d-flex justify-content-center">
+          <div class="typewriter">
+            <h1>Traits about you</h1>
+          </div>
+        </div>
 
-        <h1>Traits about you</h1>
 
-        <h3>Let's work on</h3>
-        <p> Current Weight: XXX </p>
-        <p> Ideal weight : XXX </p>
-        <p> Body Mass Index: XXX </p>
-        <p> Current Body Composition: Skinny fat </p>
-        <p> Transformation Archetype:  Endurance Master </p>
 
-        <h3>Your natural stats</h3>
 
-        <p> Age: XXX </p>
-        <p> Sex: M/F/T </p>
-        <p> Dietary Restriction:</p>
-        <ul>
-          <li>
-            Allergies: XXX
-          </li>
-          <li>
-            Present diet: XXX
-          </li>
-          <li>
-            Religion: XXX
-          </li>
-          <li>
-            Anything else: XXX
-          </li>
-        </ul>
-        <p> Physical Impediments: XXX </p>
+        <div id="letsWorkOn" style="display: none;">
+          <h3>Let's work on</h3>
+          <p>Ideal Weight<input type="text" class="form-control" /></p>
+          <p>
+            Current Body Composition
+            <select class="form-control">
+              <option></option>
+              <option>Skinny fat</option>
+              <option>Strong fat</option>
+              <option>Strong</option>
+              <option>Phoenix Rising</option>
+            </select>
+          </p>
+          <p>
+            Transformation Archetype
+            <select class="form-control">
+              <option></option>
+              <option>Sculptor</option>
+              <option>Builder</option>
+              <option>Balancer</option>
+              <option>Shaper</option>
+              <option>Learner</option>
+              <option>Transformer</option>
+              <option>Endurance Master</option>
+            </select>
+          </p>
+          <button id="letsWorkOnSubmit" class="btn btn-primary mt-2 mb-3">Continue</button>
+        </div>
+
+
+
+
+
+        <div id="naturalStats" style="display: none;">
+          <h3>Your natural stats</h3>
+          <p>Current Weight<input type="text" class="form-control" /></p>
+          <p>Age<input type="text" class="form-control" /></p>
+          <p>
+            Sex
+            <select class="form-control">
+              <option>Male</option>
+              <option>Female</option>
+            </select>
+          </p>
+          <p>Dietary Restriction</p>
+          <ul>
+            <li>Allergies<input type="text" class="form-control" /></li>
+            <li>Present diet<input type="text" class="form-control" /></li>
+            <li>Religion<input type="text" class="form-control" /></li>
+            <li>Anything else we should know about your diet<input type="text" class="form-control" /></li>
+          </ul>
+          <p>Physical Impediments<input type="text" class="form-control" /></p>
+        </div>
 
 
       </div>
-      <div class="text-center mt-auto">
-        <button type="button" class="btn btn-primary btn-lg px-4 py-3" data-mdb-ripple-init onclick="location.href='{{ url_for('builder') }}'">Get Started</button>
-      </div>
-
     </div>
-
   </div>
-
 </div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      document.getElementById('letsWorkOn').style.display = 'block';
+      document.getElementById('letsWorkOn').classList.add('fade-in');
+    }, 1100);
+
+    document.getElementById('letsWorkOnSubmit').addEventListener('click', function () {
+      document.getElementById('naturalStats').style.display = 'block';
+      document.getElementById('naturalStats').classList.add('fade-in');
+    });
+  });
+</script>
 {% endblock %}
 
