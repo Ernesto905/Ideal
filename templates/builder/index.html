@@ -35,18 +35,26 @@
           <h6 class="typing-animation">What is your present weight and goal weight?</h6>
         </div>
 
+        {% if result %}
+          <div id="response">{{ result }}</div>
+        {% endif %}
+
       </div>
 
       <div class="card-footer">
-        <form>
-          <div class="input-group">
-            <input type="text" class="form-control" placeholder="Type your message...">
-            <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Send</button>
-            </div>
-          </div>
-        </form>
+
+          <form hx-post="/generate" hx-target="#response">
+              <div class="input-group">
+                  <input type="text" class="form-control" name="user_input" placeholder="Type your message...">
+                  <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">Send</button>
+                  </div>
+              </div>
+          </form>
+
+          <div id="response">{{ result }}</div>
       </div>
+
     </div>
   </div>
 
