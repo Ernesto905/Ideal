@@ -58,71 +58,63 @@
   <div class="col-md-6">
     <div class="card">
       <div class="card-body" style="height: 86vh; overflow-y: auto;">
-
-        <div class="d-flex justify-content-center">
-          <div class="typewriter">
-            <h1>Traits about you</h1>
+        <form id="builderForm" action="/builder" method="POST">
+          <div class="d-flex justify-content-center">
+            <div class="typewriter">
+              <h1>Traits about you</h1>
+            </div>
           </div>
-        </div>
-
-
-
-
-        <div id="letsWorkOn" style="display: none;">
-          <h3>Let's work on</h3>
-          <p>Ideal Weight<input type="text" class="form-control" /></p>
-          <p>
-            Current Body Composition
-            <select class="form-control">
-              <option></option>
-              <option>Skinny fat</option>
-              <option>Strong fat</option>
-              <option>Strong</option>
-              <option>Phoenix Rising</option>
-            </select>
-          </p>
-          <p>
-            Transformation Archetype
-            <select class="form-control">
-              <option></option>
-              <option>Sculptor</option>
-              <option>Builder</option>
-              <option>Balancer</option>
-              <option>Shaper</option>
-              <option>Learner</option>
-              <option>Transformer</option>
-              <option>Endurance Master</option>
-            </select>
-          </p>
-          <button id="letsWorkOnSubmit" class="btn btn-primary mt-2 mb-3">Continue</button>
-        </div>
-
-
-
-
-
-        <div id="naturalStats" style="display: none;">
-          <h3>Your natural stats</h3>
-          <p>Current Weight<input type="text" class="form-control" /></p>
-          <p>Age<input type="text" class="form-control" /></p>
-          <p>
-            Sex
-            <select class="form-control">
-              <option>Male</option>
-              <option>Female</option>
-            </select>
-          </p>
-          <p>Dietary Restriction</p>
-          <ul>
-            <li>Allergies<input type="text" class="form-control" /></li>
-            <li>Present diet<input type="text" class="form-control" /></li>
-            <li>Religion<input type="text" class="form-control" /></li>
-            <li>Anything else we should know about your diet<input type="text" class="form-control" /></li>
-          </ul>
-          <p>Physical Impediments<input type="text" class="form-control" /></p>
-        </div>
-
-
+          <div id="letsWorkOn" style="display: none;">
+            <h3>Let's work on</h3>
+            <p>Ideal Weight<input type="text" class="form-control" name="ideal_weight" required/></p>
+            <p>
+              Current Body Composition
+              <select class="form-control" name="body_composition" required>
+                <option value="">Select an option</option>
+                <option>Skinny fat</option>
+                <option>Strong fat</option>
+                <option>Strong</option>
+                <option>Phoenix Rising</option>
+              </select>
+            </p>
+            <p>
+              Transformation Archetype
+              <select class="form-control" name="archetype" required>
+                <option value="">Select an option</option>
+                <option>Sculptor</option>
+                <option>Builder</option>
+                <option>Balancer</option>
+                <option>Shaper</option>
+                <option>Learner</option>
+                <option>Transformer</option>
+                <option>Endurance Master</option>
+              </select>
+            </p>
+            <button id="letsWorkOnSubmit" class="btn btn-primary mt-2 mb-3" type="button">Continue</button>
+          </div>
+          <div id="naturalStats" style="display: none;">
+            <h3>Your natural stats</h3>
+            <p>Current Weight<input type="text" class="form-control" name="current_weight" required/></p>
+            <p>Age<input type="text" class="form-control" name="age" required/></p>
+            <p>
+              Sex
+              <select class="form-control" name="sex" required>
+                <option value="">Select an option</option>
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </p>
+            <p>Dietary Restriction</p>
+            <ul>
+              <li>Allergies<input type="text" class="form-control" name="allergies" required/></li>
+              <li>Present diet<input type="text" class="form-control" name="diet" required/></li>
+              <li>Religion<input type="text" class="form-control" name="religion" required/></li>
+              <li>Anything else we should know about your diet<input type="text" class="form-control" name="anything_else_diet" required/></li>
+            </ul>
+            <p>Physical Impediments<input type="text" class="form-control" name="physical_impediments" required/></p>
+            <button type="submit" class="btn btn-primary mt-2 mb-3">Submit</button>
+          </div>
+        </form>
       </div>
     </div>
   </div>

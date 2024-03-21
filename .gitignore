@@ -1,3 +1,10 @@
+# python stuff
 __pychache__/
 venv 
 .env
+
+# Jupyter notebook
+.ipynb_checkpoints
+
+# Misc
+old_chatbot_html

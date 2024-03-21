@@ -27,6 +27,7 @@
       <div class="card-body" style="height: 40vh; overflow-y: auto;">
         {# Text goes here #}
         <h1>Current stats</h1>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
 
 
 
@@ -65,6 +66,9 @@
   </div>
 
 </div>
+
+<button hx-get="/test_backend" hx-target="#result">Test the Backend Session Values</button>
+<div id="result"></div>
 
 {% endblock %}
 
