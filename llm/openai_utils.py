@@ -17,8 +17,6 @@ def get_completion(form_input):
 
     return completion.choices[0].message
 
-<<<<<<< Updated upstream
-=======
 def test_backend(session):
     # Access session values
     current_weight = session.get("current_weight")
@@ -67,4 +65,3 @@ def test_backend_garv(session):
     print(session_values)
 
     return session_values
->>>>>>> Stashed changes

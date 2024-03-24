@@ -1,0 +1,142 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+
+<style>
+  .typewriter h1 {
+    color: black;
+    overflow: hidden;
+    border-right: 0.15em solid black;
+    white-space: nowrap;
+    margin: 0 auto;
+    animation: typing 1.0s steps(30, end), blink-caret 0.5s step-end infinite;
+  }
+
+  @keyframes typing {
+    from {
+      width: 0;
+    }
+    to {
+      width: 100%;
+    }
+  }
+
+  @keyframes blink-caret {
+    from,
+    to {
+      border-color: transparent;
+    }
+    50% {
+      border-color: black;
+    }
+  }
+
+  .fade-in {
+    opacity: 0;
+    animation: fadeInAnimation 1s ease-in forwards;
+  }
+
+  @keyframes fadeInAnimation {
+    from {
+      opacity: 0;
+      transform: translateY(-20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  ul {
+    list-style-type: none;
+  }
+</style>
+
+<div class="row justify-content-center">
+  <div class="col-md-6">
+    <div class="card">
+      <div class="card-body" style="height: 86vh; overflow-y: auto;">
+
+          <div class="d-flex justify-content-center">
+            <div class="typewriter">
+              <h1>Traits about you</h1>
+            </div>
+          </div>
+
+          <div id="letsWorkOn" style="display: none;">
+            <h3>Let's work on</h3>
+            <p>Ideal Weight<input type="text" class="form-control" name="ideal_weight"/></p>
+            <p>
+              Current Body Composition
+              <select class="form-control" name="body_composition">
+                <option></option>
+                <option>Skinny fat</option>
+                <option>Strong fat</option>
+                <option>Strong</option>
+                <option>Phoenix Rising</option>
+              </select>
+            </p>
+            <p>
+              Transformation Archetype
+              <select class="form-control" name="archetype">
+                <option></option>
+                <option>Sculptor</option>
+                <option>Builder</option>
+                <option>Balancer</option>
+                <option>Shaper</option>
+                <option>Learner</option>
+                <option>Transformer</option>
+                <option>Endurance Master</option>
+              </select>
+            </p>
+            <button id="letsWorkOnSubmit" class="btn btn-primary mt-2 mb-3">Continue</button>
+          </div>
+
+          <div id="naturalStats" style="display: none;">
+            <h3>Your natural stats</h3>
+            <p>Current Weight<input type="text" class="form-control" name="current_weight"/></p>
+            <p>Age<input type="text" class="form-control" name="age"/></p>
+            <p>
+              Sex
+              <select class="form-control" name="sex">
+                <option>Male</option>
+                <option>Female</option>
+              </select>
+            </p>
+            <p>Dietary Restriction</p>
+            <ul>
+              <li>Allergies<input type="text" class="form-control" name="allergies"/></li>
+              <li>Present diet<input type="text" class="form-control" name="diet"/></li>
+              <li>Religion<input type="text" class="form-control" name="religion"/></li>
+              <li>Anything else we should know about your diet<input type="text" class="form-control" name="anything_else"/></li>
+            </ul>
+            <p>Physical Impediments<input type="text" class="form-control" name="anything_else"/></p>
+
+            <a href="/dashboard" class="btn btn-primary mt-2 mb-3">Go to Dashboard</a>
+
+          </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  document.addEventListener('DOMContentLoaded', function () {
+    setTimeout(function () {
+      document.getElementById('letsWorkOn').style.display = 'block';
+      document.getElementById('letsWorkOn').classList.add('fade-in');
+    }, 1100);
+
+    document.getElementById('letsWorkOnSubmit').addEventListener('click', function () {
+      document.getElementById('naturalStats').style.display = 'block';
+      document.getElementById('naturalStats').classList.add('fade-in');
+    });
+  });
+</script>
+{% endblock %}
+
