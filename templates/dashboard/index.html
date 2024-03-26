@@ -28,9 +28,6 @@
         {# Text goes here #}
         <h1>Current stats</h1>
         <p>Current weight: {{ session.get('current_weight', '')}}</p>
-
-
-
       </div>
     </div>
   </div>
@@ -52,19 +49,33 @@
 
 {# Bottom most section. Recipes and nutrition #}
 <div class="row justify-content-center mt-5">
-
   <div class="col-md-6">
     <div class="card">
       <div class="card-body" style="height: 40vh; overflow-y: auto;">
-        {# Text goes here #}
-        <h1>Nutritional facts</h1>
-
-
-
+        <h1>Feeling Hungry?</h1>
+        <div id="recipes-container">
+          {% if data %}
+            {% include 'dashboard/recipes.html' %}
+          {% else %}
+            <div class="text-center">
+              <div class="d-flex justify-content-center">
+                <div class="spinner-grow text-primary me-2" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-secondary me-2" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+                <div class="spinner-grow text-success" role="status">
+                  <span class="visually-hidden">Loading...</span>
+                </div>
+              </div>
+              <p class="mt-2">Loading nutritional facts...</p>
+            </div>
+          {% endif %}
+        </div>
       </div>
     </div>
   </div>
-
 </div>
 
 <button hx-get="/test_backend" hx-target="#result">Test the Backend Session Values</button>
@@ -72,8 +83,5 @@
 
 <button hx-get="/test_backend_garv" hx-target="#result">Test the Backend Session Values (Garv)</button>
 <div id="result_garv"></div>
-
-<button hx-get="/test_backend_ernesto" hx-target="#result_ernesto">Test the Backend Session Values (Ernesto)</button>
-<div id="result_ernesto"></div>
 {% endblock %}
 
