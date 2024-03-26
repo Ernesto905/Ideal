@@ -1,5 +1,5 @@
 from flask import Flask, render_template, url_for, request, redirect, session
-from llm.openai_utils import get_completion, test_backend, test_backend_garv
+from llm.openai_utils import get_completion, test_backend, test_backend_garv, test_backend_ernesto
 from dotenv import load_dotenv
 import os
 
@@ -48,6 +48,11 @@ def test_the_backend():
 def test_the_backend_garv():
     result_garv = test_backend_garv(session)
     return result_garv
+
+@app.route("/test_backend_ernesto", methods=["GET"])
+def test_the_backend_ernesto():
+    result_ernesto = test_backend_ernesto(session)
+    return f"Breakfast: {result_ernesto[0]}\n Lunch: {result_ernesto[1]}\n Dinner: {result_ernesto[2]}\n Dessert: {result_ernesto[3]}"
 
 
 """Commented out just in case we need it in the future"""

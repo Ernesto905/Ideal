@@ -1,7 +1,8 @@
 from openai import OpenAI 
 import os 
 import dotenv
-from llm import nutrition_function
+# from llm import nutrition_function
+from llm import frontend_nut
 dotenv.load_dotenv()
 
 client = OpenAI()
@@ -61,7 +62,17 @@ def test_backend_garv(session):
     anything_else_diet = session.get("anything_else_diet")
     physical_impediments = session.get("physical_impediments")
 
-    session_values = nutrition_function.main(current_weight, ideal_weight, body_composition, archetype, age, sex, allergies, diet)
-    print(session_values)
+    session_values = frontend_nut.main(current_weight, ideal_weight, body_composition, archetype, age, sex, allergies, diet)
+    print(f"The return from main is: {session_values}")
 
     return session_values
+
+def test_backend_ernesto(session):
+    allergies = session.get("allergies")
+    diet = session.get("diet")
+    religion = session.get("religion")
+
+    session_values = frontend_nut.get_recipes(religion, allergies, diet)
+
+    return session_values
+
