@@ -2,86 +2,145 @@
 
 {% block content %}
 
-{# Weight over time #}
-<div class="row justify-content-center mt-5 ">
+<style>
+body {
+  font-family: 'Open Sans', sans-serif;
+  background-color: #f8f9fa;
+}
 
-  <div class="col-md-6">
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Montserrat', sans-serif;
+  color: #333;
+}
+
+.card {
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+  background-color: #28a745;
+  border-color: #28a745;
+}
+
+.btn-primary:hover {
+  background-color: #218838;
+  border-color: #218838;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-secondary:hover {
+  background-color: #5a6268;
+  border-color: #5a6268;
+}
+
+.card-header {
+  background-color: #f8f9fa;
+  border-bottom: 1px solid #dee2e6;
+  padding: 1rem;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+</style>
+
+<h2 class="text-center my-3">Fitness Dashboard</h2>
+
+<div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center">
+  <div class="col">
     <div class="card">
-      <div class="card-body" style="height: 40vh; overflow-y: auto;">
-        {# Text goes here #}
-        <h1>Weight over time</h1>
-
-
-
+      <div class="card-header">
+        <h4 class="mb-0">Current Stats</h4>
       </div>
-    </div>
-  </div>
-
-</div>
-
-<div class="row justify-content-center mt-5 ">
-
-  {# Leftmost form. This is the "current stats" #}
-  <div class="col-md-4 me-5">
-    <div class="card">
-      <div class="card-body" style="height: 40vh; overflow-y: auto;">
-        {# Text goes here #}
-        <h1>Current stats</h1>
+      <div class="card-body" style="height: 50vh; overflow-y: auto;">
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        <p>Current weight: {{ session.get('current_weight', '')}}</p>
         <p>Current weight: {{ session.get('current_weight', '')}}</p>
       </div>
     </div>
   </div>
-
-  {# Rightmost form. This is the "Active Workout Regiment" #}
-  <div class="col-md-4 ms-5">
+  <div class="col">
     <div class="card">
-      <div class="card-body" style="height: 40vh; overflow-y: auto;">
+      <div class="card-header">
+        <h4 class="mb-0">Active Workout Regiment</h4>
+      </div>
+      <div class="card-body" style="height: 50vh; overflow-y: auto;">
         {# Text goes here #}
-        <h1>Active workout regiment</h1>
+      </div>
+    </div>
+  </div>
+</div>
 
+<div class="row row-cols-1 row-cols-md-2 g-4 justify-content-center mt-4">
+  {# Left card: List of recipes #}
+  <div class="col">
+    <div class="card">
+      <div class="card-header">
+        <h4 class="mb-0">Feeling Hungry?</h4>
+      </div>
+      <div class="card-body" style="height: 60vh; overflow-y: auto;">
+        <div id="recipes-container">
+          {# for when no more api :(
+          {% if data %}
+            {% include 'dashboard/recipes.html' %}
+          {% else %}
+          #}
+          <div class="text-center">
+            <div class="spinner-border text-success" role="status">
+              <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading nutritional facts...</p>
+          </div>
 
+          {# for when no more api :(
+          {% endif %}
+
+          #}
+        </div>
       </div>
     </div>
   </div>
 
-</div>
-
-
-{# Bottom most section. Recipes and nutrition #}
-<div class="row justify-content-center mt-5">
-  <div class="col-md-6">
+  {# Right card: Chatbot #}
+  <div class="col">
     <div class="card">
-      <div class="card-body" style="height: 40vh; overflow-y: auto;">
-        <h1>Feeling Hungry?</h1>
-        <div id="recipes-container">
-          {% if data %}
-            {% include 'dashboard/recipes.html' %}
-          {% else %}
-            <div class="text-center">
-              <div class="d-flex justify-content-center">
-                <div class="spinner-grow text-primary me-2" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-secondary me-2" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
-                <div class="spinner-grow text-success" role="status">
-                  <span class="visually-hidden">Loading...</span>
-                </div>
+      <div class="card-header">
+        <h4 class="mb-0">Chatbot</h4>
+      </div>
+      <div class="card-body d-flex flex-column" style="height: 60vh;">
+        <div class="text-center mb-3">
+          <h5>Let's find you something good to eat!</h5>
+        </div>
+
+        <!-- Response container -->
+        <div id="chat-response" class="mb-3"></div> <!-- Ensure this is outside the form -->
+
+        <div class="mt-auto">
+          <form hx-post="/generate" hx-target="#chat-response" hx-swap="outerHTML">
+            <div class="input-group">
+              <input type="text" class="form-control" name="user_input" placeholder="Type your message...">
+              <div class="input-group-append">
+                <button class="btn btn-primary" type="submit">Send</button>
               </div>
-              <p class="mt-2">Loading nutritional facts...</p>
             </div>
-          {% endif %}
+          </form>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<button hx-get="/test_backend" hx-target="#result">Test the Backend Session Values</button>
+<button class="btn btn-primary mt-4" hx-get="/test_backend" hx-target="#result">Test the Backend Session Values</button>
 <div id="result"></div>
 
-<button hx-get="/test_backend_garv" hx-target="#result">Test the Backend Session Values (Garv)</button>
+<button class="btn btn-secondary mt-2" hx-get="/test_backend_garv" hx-target="#result">Test the Backend Session Values (Garv)</button>
 <div id="result_garv"></div>
 {% endblock %}
 

@@ -2,7 +2,6 @@ from flask import Flask, render_template, url_for, request, redirect, session, j
 from llm.openai_utils import (
     get_completion,
     display_recipes,
-    test_backend,
     test_backend_garv,
 )
 from dotenv import load_dotenv
@@ -42,15 +41,15 @@ def builder():
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
-    recipes_list = display_recipes(session)
-    return render_template("dashboard/index.html", data=recipes_list)
+    # recipes_list = display_recipes(session)
+    # print(f"recipes is: {recipes_list}")
+    # return render_template("dashboard/index.html", data=recipes_list)
+
+    # For when no more api :(
+    return render_template("dashboard/index.html")
 
 
-# Backend routes (OPTIONAL: If decide to Auth, utilize Json web tokens 🤢🤮)
-@app.route("/test_backend", methods=["GET"])
-def test_the_backend():
-    result = test_backend(session)
-    return result
+# Backend routes
 
 
 @app.route("/test_backend_garv", methods=["GET"])
@@ -59,19 +58,13 @@ def test_the_backend_garv():
     return result_garv
 
 
-"""Commented out just in case we need it in the future"""
-# @app.route("/test_backend_ernesto", methods=["GET"])
-# def test_the_backend_ernesto():
-#     result_ernesto = test_backend_ernesto(session)
-#     return jsonify(result_ernesto)
-
-
-# @app.route("/generate", methods=["GET", "POST"])
-# def generate():
-#     print("This should work")
-#     if request.method == "POST":
-#         response = get_completion(request.form["user_input"])
-#         print(f"response is {response}")
-#         return redirect(url_for("generate", result=response))
-#     result = request.args.get("result")
-#     return render_template("index.html", result=result)
+@app.route("/generate", methods=["GET", "POST"])
+def generate():
+    print("------------------------------------------------------This should work")
+    if request.method == "POST":
+        user_input = request.form["user_input"]
+        response = get_completion(user_input)  # Assuming this function returns a string
+        print(f"response is {response}")
+        # Return HTML snippet for HTMX to inject
+        return f"<div id='chat-response' class='mb-3'>{response}</div>"
+    return render_template("index.html")

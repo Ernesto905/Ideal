@@ -38,3 +38,7 @@ def get_recipes(religion, allergies, diet):
         "dinner": response_dinner.json(),
         "dessert": response_dessert.json(),
     }
+
+
+def nothing():
+    pass

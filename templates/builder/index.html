@@ -5,13 +5,14 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
 
 <style>
+
   .typewriter h1 {
-    color: black;
+    color: #28a745;
     overflow: hidden;
-    border-right: 0.15em solid black;
+    border-right: 0.15em solid #28a745;
     white-space: nowrap;
     margin: 0 auto;
-    animation: typing 1.0s steps(30, end), blink-caret 0.5s step-end infinite;
+    animation: typing 1.0s steps(30, end), blink-caret 0.8s step-end infinite;
   }
 
   @keyframes typing {
@@ -32,6 +33,28 @@
       border-color: black;
     }
   }
+  .card {
+    border: none;
+  }
+
+
+  .form-label {
+    font-weight: bold;
+  }
+
+  .form-control {
+    border-radius: 5px;
+  }
+
+  .btn-primary {
+    background-color: #28a745;
+    border-color: #28a745;
+  }
+
+  .btn-primary:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
 
   .fade-in {
     opacity: 0;
@@ -48,90 +71,152 @@
       transform: translateY(0);
     }
   }
-
-  ul {
-    list-style-type: none;
-  }
 </style>
-
 <div class="row justify-content-center">
-  <div class="col-md-6">
+  <div class="col-md-8">
     <div class="card">
-      <div class="card-body" style="height: 86vh; overflow-y: auto;">
+      <div class="card-body">
         <form id="builderForm" action="/builder" method="POST">
-          <div class="d-flex justify-content-center">
-            <div class="typewriter">
-              <h1>Traits about you</h1>
+
+          <div class="step" id="step1">
+            <div class="d-flex justify-content-center">
+              <div class="typewriter">
+                <h1>Step 1: All about you</h1>
+              </div>
+            </div>
+            <div id="letsWorkOn" style="display: none;">
+              <div class="mb-3">
+                <label for="age" class="form-label">Age</label>
+                <input type="text" class="form-control" id="age" name="age" required>
+              </div>
+              <div class="mb-3 ">
+                <label for="current_weight" class="form-label">Current Weight</label>
+                <input type="text" class="form-control" id="current_weight" name="current_weight" required>
+              </div>
+              <div class="mb-3 ">
+                <label for="sex" class="form-label">Sex</label>
+                <select class="form-select" id="sex" name="sex" required>
+                  <option value="">Select an option</option>
+                  <option>Male</option>
+                  <option>Female</option>
+                </select>
+              </div>
+              <div class="mb-3 ">
+                <ul class="list-unstyled">
+                  <li>
+                    <label for="allergies" class="form-label">Allergies</label>
+                    <input type="text" class="form-control" id="allergies" name="allergies">
+                  </li>
+                  <li>
+                    <label for="diet" class="form-label">Present diet</label>
+                    <input type="text" class="form-control" id="diet" name="diet">
+                  </li>
+                  <li>
+                    <label for="religion" class="form-label">Religion</label>
+                    <input type="text" class="form-control" id="religion" name="religion">
+                  </li>
+                </ul>
+              </div>
+              <div class="mb-3 ">
+                <label for="physical_impediments" class="form-label">Physical Impediments</label>
+                <input type="text" class="form-control" id="physical_impediments" name="physical_impediments">
+              </div>
+            <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
             </div>
           </div>
-          <div id="letsWorkOn" style="display: none;">
-            <h3>Let's work on</h3>
-            <p>Ideal Weight<input type="text" class="form-control" name="ideal_weight" required/></p>
-            <p>
-              Current Body Composition
-              <select class="form-control" name="body_composition" required>
-                <option value="">Select an option</option>
-                <option>Skinny fat</option>
-                <option>Strong fat</option>
-                <option>Strong</option>
-                <option>Phoenix Rising</option>
-              </select>
-            </p>
-            <p>
-              Transformation Archetype
-              <select class="form-control" name="archetype" required>
-                <option value="">Select an option</option>
-                <option>Sculptor</option>
-                <option>Builder</option>
-                <option>Balancer</option>
-                <option>Shaper</option>
-                <option>Learner</option>
-                <option>Transformer</option>
-                <option>Endurance Master</option>
-              </select>
-            </p>
-            <button id="letsWorkOnSubmit" class="btn btn-primary mt-2 mb-3" type="button">Continue</button>
-          </div>
-          <div id="naturalStats" style="display: none;">
-            <h3>Your natural stats</h3>
-            <p>Current Weight<input type="text" class="form-control" name="current_weight" required/></p>
-            <p>Age<input type="text" class="form-control" name="age" required/></p>
-            <p>
-              Sex
-              <select class="form-control" name="sex" required>
-                <option value="">Select an option</option>
-                <option>Male</option>
-                <option>Female</option>
-              </select>
-            </p>
-            <p>Dietary Restriction</p>
-            <ul>
-              <li>Allergies<input type="text" class="form-control" name="allergies" /></li>
-              <li>Present diet<input type="text" class="form-control" name="diet" /></li>
-              <li>Religion<input type="text" class="form-control" name="religion" /></li>
-              <li>Anything else we should know about your diet<input type="text" class="form-control" name="anything_else_diet" /></li>
-            </ul>
-            <p>Physical Impediments<input type="text" class="form-control" name="physical_impediments"/></p>
-            <button type="submit" class="btn btn-primary mt-2 mb-3">Submit</button>
+
+
+
+          <div class="step" id="step2" style="display: none;">
+            <div class="d-flex justify-content-center">
+              <div class="typewriter">
+                <h1>Step 2: Where you need to be</h1>
+              </div>
+            </div>
+
+
+            <div id="letsWorkOn2" style="display: none;">
+
+              <div class="mb-3 ">
+                <label for="ideal_weight" class="form-label">Ideal Weight</label>
+                <input type="text" class="form-control" id="ideal_weight" name="ideal_weight" required>
+              </div>
+              <div class="mb-3 ">
+                <label for="body_composition" class="form-label">Personal fitness goals</label>
+                <select class="form-select" id="body_composition" name="body_composition" required>
+                  <option value="">Select an option</option>
+                  <option value="enhance_muscle_tone">Trim excess fat</option>
+                  <option value="build_lean_mass">Build Lean Mass</option>
+                  <option value="increase_strength">Increase Strength</option>
+                  <option value="improve_endurance">Improve Endurance</option>
+                  <option value="boost_overall_fitness">Boost Overall Fitness</option>
+                </select>
+              </div>
+              <button type="button" class="btn btn-secondary prev-btn">Previous</button>
+              <button type="submit" class="btn btn-primary" disabled>Submit</button>
+            </div>
           </div>
         </form>
+        <div id="letsWorkOn" style="display: none;">
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-
 <script>
   document.addEventListener('DOMContentLoaded', function () {
+    const step1 = document.getElementById('step1');
+    const step2 = document.getElementById('step2');
+    const nextBtn = document.querySelector('.next-btn');
+    const prevBtn = document.querySelector('.prev-btn');
+    const submitBtn = document.querySelector('button[type="submit"]');
+
+    function checkStep1Fields() {
+      const age = document.getElementById('age').value;
+      const currentWeight = document.getElementById('current_weight').value;
+      const sex = document.getElementById('sex').value;
+
+
+      if (age && currentWeight && sex) {
+        nextBtn.disabled = false;
+      } else {
+        nextBtn.disabled = true;
+      }
+    }
+
+    function checkStep2Fields() {
+      const idealWeight = document.getElementById('ideal_weight').value;
+      const bodyComposition = document.getElementById('body_composition').value;
+
+      if (idealWeight && bodyComposition) {
+        submitBtn.disabled = false;
+      } else {
+        submitBtn.disabled = true;
+      }
+    }
+
+    step1.addEventListener('input', checkStep1Fields);
+    step2.addEventListener('input', checkStep2Fields);
+
+    nextBtn.addEventListener('click', function () {
+      step1.style.display = 'none';
+      step2.style.display = 'block';
+    });
+
+    prevBtn.addEventListener('click', function () {
+      step2.style.display = 'none';
+      step1.style.display = 'block';
+    });
+
     setTimeout(function () {
       document.getElementById('letsWorkOn').style.display = 'block';
       document.getElementById('letsWorkOn').classList.add('fade-in');
     }, 1100);
-
-    document.getElementById('letsWorkOnSubmit').addEventListener('click', function () {
-      document.getElementById('naturalStats').style.display = 'block';
-      document.getElementById('naturalStats').classList.add('fade-in');
-    });
+    setTimeout(function () {
+      document.getElementById('letsWorkOn2').style.display = 'block';
+      document.getElementById('letsWorkOn2').classList.add('fade-in');
+    }, 1100);
   });
 </script>
 {% endblock %}
