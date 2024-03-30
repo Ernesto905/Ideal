@@ -1,11 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
-
 <style>
-
   .typewriter h1 {
     color: #28a745;
     overflow: hidden;
@@ -71,6 +67,24 @@
       transform: translateY(0);
     }
   }
+  .goal-card {
+    cursor: pointer;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+
+  .goal-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+
+  .goal-card input[type="radio"] {
+    display: none;
+  }
+
+  .goal-card input[type="radio"]:checked + .card {
+    border-color: #007bff;
+    box-shadow: 0 0 0 2px #007bff;
+  }
 </style>
 <div class="row justify-content-center">
   <div class="col-md-8">
@@ -89,10 +103,15 @@
                 <label for="age" class="form-label">Age</label>
                 <input type="text" class="form-control" id="age" name="age" required>
               </div>
+              <div class="mb-3">
+                <label for="height" class="form-label">Height (cm)</label>
+                <input type="text" class="form-control" id="height" name="height" required>
+              </div>
               <div class="mb-3 ">
-                <label for="current_weight" class="form-label">Current Weight</label>
+                <label for="current_weight" class="form-label">Current Weight (lb)</label>
                 <input type="text" class="form-control" id="current_weight" name="current_weight" required>
               </div>
+
               <div class="mb-3 ">
                 <label for="sex" class="form-label">Sex</label>
                 <select class="form-select" id="sex" name="sex" required>
@@ -101,21 +120,22 @@
                   <option>Female</option>
                 </select>
               </div>
-              <div class="mb-3 ">
-                <ul class="list-unstyled">
-                  <li>
+
+              <div class="mb-3">
+                <div class="row">
+                  <div class="col">
                     <label for="allergies" class="form-label">Allergies</label>
                     <input type="text" class="form-control" id="allergies" name="allergies">
-                  </li>
-                  <li>
+                  </div>
+                  <div class="col">
                     <label for="diet" class="form-label">Present diet</label>
                     <input type="text" class="form-control" id="diet" name="diet">
-                  </li>
-                  <li>
-                    <label for="religion" class="form-label">Religion</label>
-                    <input type="text" class="form-control" id="religion" name="religion">
-                  </li>
-                </ul>
+                  </div>
+                </div>
+              </div>
+              <div class="mb-3 ">
+                <label for="religion" class="form-label">Religion</label>
+                <input type="text" class="form-control" id="religion" name="religion">
               </div>
               <div class="mb-3 ">
                 <label for="physical_impediments" class="form-label">Physical Impediments</label>
@@ -124,34 +144,78 @@
             <button type="button" class="btn btn-primary next-btn" disabled>Next</button>
             </div>
           </div>
-
-
-
           <div class="step" id="step2" style="display: none;">
             <div class="d-flex justify-content-center">
               <div class="typewriter">
                 <h1>Step 2: Where you need to be</h1>
               </div>
             </div>
-
-
             <div id="letsWorkOn2" style="display: none;">
-
               <div class="mb-3 ">
                 <label for="ideal_weight" class="form-label">Ideal Weight</label>
                 <input type="text" class="form-control" id="ideal_weight" name="ideal_weight" required>
               </div>
-              <div class="mb-3 ">
-                <label for="body_composition" class="form-label">Personal fitness goals</label>
-                <select class="form-select" id="body_composition" name="body_composition" required>
-                  <option value="">Select an option</option>
-                  <option value="enhance_muscle_tone">Trim excess fat</option>
-                  <option value="build_lean_mass">Build Lean Mass</option>
-                  <option value="increase_strength">Increase Strength</option>
-                  <option value="improve_endurance">Improve Endurance</option>
-                  <option value="boost_overall_fitness">Boost Overall Fitness</option>
-                </select>
+              <div class="mb-3">
+                <label class="form-label">Personal fitness goals</label>
+                <div class="row">
+                  <div class="col-md-4 mb-3">
+                    <label class="goal-card">
+                      <input type="radio" id="body_goal" name="body_goal" value="Trim Excess Fat" required>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">Trim excess fat</h5>
+                          <p class="card-text">Achieve a leaner physique and improve overall body composition.</p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="goal-card">
+                      <input type="radio" id="body_goal" name="body_goal" value="Build Lean Mass" required>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">Build Lean Mass</h5>
+                          <p class="card-text">Gain muscle mass while minimizing fat gain for a stronger, more defined physique.</p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="goal-card">
+                      <input type="radio" id="body_goal" name="body_goal" value="Increase Strength" required>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">Increase Strength</h5>
+                          <p class="card-text">Focus on increasing overall strength and power through resistance training.</p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="goal-card">
+                      <input type="radio" id="body_goal" name="body_goal" value="Improve Endurance" required>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">Improve Endurance</h5>
+                          <p class="card-text">Enhance cardiovascular fitness and stamina for better performance in endurance activities.</p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                  <div class="col-md-4 mb-3">
+                    <label class="goal-card">
+                      <input type="radio" id="body_goal" name="body_goal" value="Boost Overall Fitness" required>
+                      <div class="card h-100">
+                        <div class="card-body">
+                          <h5 class="card-title">Boost Overall Fitness</h5>
+                          <p class="card-text">Improve overall fitness level through a combination of strength training, cardio, and flexibility exercises.</p>
+                        </div>
+                      </div>
+                    </label>
+                  </div>
+                </div>
               </div>
+
               <button type="button" class="btn btn-secondary prev-btn">Previous</button>
               <button type="submit" class="btn btn-primary" disabled>Submit</button>
             </div>
@@ -174,11 +238,12 @@
 
     function checkStep1Fields() {
       const age = document.getElementById('age').value;
+      const height = document.getElementById('height').value;
       const currentWeight = document.getElementById('current_weight').value;
       const sex = document.getElementById('sex').value;
 
 
-      if (age && currentWeight && sex) {
+      if (age && currentWeight && sex && height) {
         nextBtn.disabled = false;
       } else {
         nextBtn.disabled = true;
@@ -187,7 +252,7 @@
 
     function checkStep2Fields() {
       const idealWeight = document.getElementById('ideal_weight').value;
-      const bodyComposition = document.getElementById('body_composition').value;
+      const bodyComposition = document.getElementById('body_goal').value;
 
       if (idealWeight && bodyComposition) {
         submitBtn.disabled = false;

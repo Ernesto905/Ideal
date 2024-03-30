@@ -56,13 +56,49 @@ h1, h2, h3, h4, h5, h6 {
         <h4 class="mb-0">Current Stats</h4>
       </div>
       <div class="card-body" style="height: 50vh; overflow-y: auto;">
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
-        <p>Current weight: {{ session.get('current_weight', '')}}</p>
+        {% if session.get('current_weight', '') != '' %}
+          <p>Current Weight: {{ session.get('current_weight') }} lbs</p>
+        {% endif %}
+        
+        {% if session.get('ideal_weight', '') != '' %}
+          <p>Ideal Weight: {{ session.get('ideal_weight') }} lbs</p>
+        {% endif %}
+        
+        {% if session.get('body_goal', '') != '' %}
+          <p>Body Composition: {{ session.get('body_goal') }}</p>
+        {% endif %}
+        
+        {% if session.get('age', '') != '' %}
+          <p>Age: {{ session.get('age') }}</p>
+        {% endif %}
+
+        {% if session.get('height', '') != '' %}
+          <p>Height: {{ session.get('height') }} cm</p>
+        {% endif %}
+        
+        {% if session.get('sex', '') != '' %}
+          <p>Sex: {{ session.get('sex') }}</p>
+        {% endif %}
+        
+        {% if session.get('allergies', '') != '' %}
+          <p>Allergies: {{ session.get('allergies') }}</p>
+        {% endif %}
+        
+        {% if session.get('diet', '') != '' %}
+          <p>Diet: {{ session.get('diet') }}</p>
+        {% endif %}
+        
+        {% if session.get('religion', '') != '' %}
+          <p>Religion: {{ session.get('religion') }}</p>
+        {% endif %}
+        
+        {% if session.get('anything_else_diet', '') != '' %}
+          <p>Anything Else (Diet): {{ session.get('anything_else_diet') }}</p>
+        {% endif %}
+        
+        {% if session.get('physical_impediments', '') != '' %}
+          <p>Physical Impediments: {{ session.get('physical_impediments') }}</p>
+        {% endif %}
       </div>
     </div>
   </div>

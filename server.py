@@ -4,6 +4,7 @@ from llm.openai_utils import (
     display_recipes,
     test_backend_garv,
 )
+from llm.calculations import calculate_daily_recommendations
 from dotenv import load_dotenv
 import os
 
@@ -26,21 +27,38 @@ def builder():
     if request.method == "POST":
         session["current_weight"] = request.form.get("current_weight")
         session["ideal_weight"] = request.form.get("ideal_weight")
-        session["body_composition"] = request.form.get("body_composition")
-        session["archetype"] = request.form.get("archetype")
+        session["body_goal"] = request.form.get("body_goal")
         session["age"] = request.form.get("age")
+        session["height"] = request.form.get("height")
         session["sex"] = request.form.get("sex")
         session["allergies"] = request.form.get("allergies")
         session["diet"] = request.form.get("diet")
         session["religion"] = request.form.get("religion")
         session["anything_else_diet"] = request.form.get("anything_else")
         session["physical_impediments"] = request.form.get("physical_impediments")
+        calculate_daily_recommendations(session)
         return redirect("/dashboard")
     return render_template("builder/index.html")
 
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
+    print("Current Weight:", session["current_weight"])
+    print("Ideal Weight:", session["ideal_weight"])
+    print("Body Composition:", session["body_goal"])
+    print("Age:", session["age"])
+    print("Sex:", session["sex"])
+    print("Allergies:", session["allergies"])
+    print("Diet:", session["diet"])
+    print("Religion:", session["religion"])
+    print("Anything Else (Diet):", session["anything_else_diet"])
+    print("Physical Impediments:", session["physical_impediments"])
+
+    print("Daily calories", session["daily_calories"])
+    print("Daily protein", session["daily_protein"])
+    print("Daily carbs", session["daily_carbs"])
+    print("Daily fats", session["daily_fats"])
+    # For when Api is yes! :)
     # recipes_list = display_recipes(session)
     # print(f"recipes is: {recipes_list}")
     # return render_template("dashboard/index.html", data=recipes_list)
