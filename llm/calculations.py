@@ -1,17 +1,16 @@
 def calculate_bmr(weight_lbs, height_cm, age, sex):
-    weight_kg = weight_lbs * 0.45359237  # Convert pounds to kilograms
-    height_m = height_cm / 100  # Convert centimeters to meters
+    weight_kg = weight_lbs * 0.454
 
     if sex == "male":
-        bmr = 88.362 + (13.397 * weight_kg) + (4.799 * height_m) - (5.677 * age)
+        bmr = 88.362 + (13.397 * weight_kg) + (4.799 * height_cm) - (5.677 * age)
     else:
-        bmr = 447.593 + (9.247 * weight_kg) + (3.098 * height_m) - (4.330 * age)
+        bmr = 447.593 + (9.247 * weight_kg) + (3.098 * height_cm) - (4.330 * age)
     return bmr
 
 
 def calculate_daily_calories(bmr, body_goal):
     # Assume a fixed activity level for moderate exercise
-    activity_level = 1.55  # This corresponds to moderate exercise/activity
+    activity_level = 1.0  # This corresponds to moderate exercise/activity
     print("Your body goal is: ", body_goal)
 
     if body_goal == "Trim Excess Fat":
@@ -77,6 +76,7 @@ def calculate_daily_recommendations(session):
 
     # Calculate BMR
     bmr = calculate_bmr(current_weight_lbs, height_cm, age, sex)
+    print("------------------- BMR is", bmr)
 
     # Calculate daily calorie intake
     daily_calories = calculate_daily_calories(bmr, body_goal)

@@ -91,14 +91,21 @@ h1, h2, h3, h4, h5, h6 {
         {% if session.get('religion', '') != '' %}
           <p>Religion: {{ session.get('religion') }}</p>
         {% endif %}
-        
-        {% if session.get('anything_else_diet', '') != '' %}
-          <p>Anything Else (Diet): {{ session.get('anything_else_diet') }}</p>
+
+
+        {% if session.get('religion', '') != '' %}
+          <p>Daily calories: {{ session.get('daily_calories') }}</p>
+        {% endif %}
+        {% if session.get('religion', '') != '' %}
+          <p>Daily recommended protein intake: {{ session.get('daily_protein_grams') }}</p>
+        {% endif %}
+        {% if session.get('religion', '') != '' %}
+          <p>Daily recommended protein intake: {{ session.get('daily_protein_grams') }}</p>
+        {% endif %}
+        {% if session.get('religion', '') != '' %}
+          <p>Religion: {{ session.get('religion') }}</p>
         {% endif %}
         
-        {% if session.get('physical_impediments', '') != '' %}
-          <p>Physical Impediments: {{ session.get('physical_impediments') }}</p>
-        {% endif %}
       </div>
     </div>
   </div>
@@ -123,11 +130,9 @@ h1, h2, h3, h4, h5, h6 {
       </div>
       <div class="card-body" style="height: 60vh; overflow-y: auto;">
         <div id="recipes-container">
-          {# for when no more api :(
           {% if data %}
             {% include 'dashboard/recipes.html' %}
           {% else %}
-          #}
           <div class="text-center">
             <div class="spinner-border text-success" role="status">
               <span class="visually-hidden">Loading...</span>
@@ -135,10 +140,8 @@ h1, h2, h3, h4, h5, h6 {
             <p class="mt-2">Loading nutritional facts...</p>
           </div>
 
-          {# for when no more api :(
           {% endif %}
 
-          #}
         </div>
       </div>
     </div>

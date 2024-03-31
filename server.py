@@ -48,20 +48,23 @@ def dashboard():
     print("Body Composition:", session["body_goal"])
     print("Age:", session["age"])
     print("Sex:", session["sex"])
+
     print("Allergies:", session["allergies"])
     print("Diet:", session["diet"])
     print("Religion:", session["religion"])
-    print("Anything Else (Diet):", session["anything_else_diet"])
+
+    # print("Anything Else (Diet):", session["anything_else_diet"])
+
     print("Physical Impediments:", session["physical_impediments"])
 
     print("Daily calories", session["daily_calories"])
-    print("Daily protein", session["daily_protein"])
-    print("Daily carbs", session["daily_carbs"])
-    print("Daily fats", session["daily_fats"])
+    print("Daily protein", session["daily_protein_grams"])
+    print("Daily carbs", session["daily_carbs_grams"])
+    print("Daily fats", session["daily_fats_grams"])
     # For when Api is yes! :)
-    # recipes_list = display_recipes(session)
+    recipes_list = display_recipes(session)
     # print(f"recipes is: {recipes_list}")
-    # return render_template("dashboard/index.html", data=recipes_list)
+    return render_template("dashboard/index.html", data=recipes_list)
 
     # For when no more api :(
     return render_template("dashboard/index.html")
