@@ -65,7 +65,7 @@ def main(current_weight, ideal_weight, archetype, age, sex, allergies, diet, use
             "type": "function",
             "function": {
                 "name": "get_recipes",
-                "description": "Get a list of recommended ingredients to make dishes out of, and give examples. Be sure to specify values for minFat, maxFat, minProtein, minCalories, and maxCalories that you think is best suited to achieve their goals. The diet should be one of [vegetarian, lacto-vegetarian, ovo-vegetarian, vegan, pescetarian, paleo, primal]. The intolerances should be one of ["", dairy, egg, gluten, grain, peanut, seafood, sesame, shellfish, soy, sulfite, wheat]. If intolerances are not specified in the prompt, just use "". The minCalories should be be >= 200, maxCalories should be <= 800, maxProtein should be <= 100, minFat >= 1, maxFat <= 100. Type should be one of [breakfast, main course, dessert]",
+                "description": "Get a list of recommended ingredients to make dishes out of, and give examples. Be sure to specify values for minFat, maxFat, minProtein, minCalories, and maxCalories that you think is best suited to achieve their goals. The diet should be one of ["", vegetarian, lacto-vegetarian, ovo-vegetarian, vegan, pescetarian, paleo, primal]. The intolerances should be one of ["", dairy, egg, gluten, grain, peanut, seafood, sesame, shellfish, soy, sulfite, wheat]. If intolerances are not specified in the prompt, just use "". The minCalories should be be >= 200, maxCalories should be <= 800, maxProtein should be <= 100, minFat >= 1, maxFat <= 100. Type should be one of [breakfast, main course, dessert]",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -102,7 +102,7 @@ def main(current_weight, ideal_weight, archetype, age, sex, allergies, diet, use
                             "description": "The type of meal, i.e. breakfast, lunch, dinner"
                         },
                     },
-                    "required": ["diet, minProtein, minCalories, maxCalories, minFat, maxFat"],
+                    "required": ["minProtein, minCalories, maxCalories, minFat, maxFat"],
                 },
             },
         }
