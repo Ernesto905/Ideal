@@ -1,0 +1,38 @@
+<div id="recipes-container">
+  {% for mealType in ['breakfast', 'lunch', 'dinner', 'dessert'] %}
+    <h3 class="mt-4 mb-3">{{ mealType.capitalize() }}</h3>
+    <div class="row mb-4">
+      {% for recipe in data[mealType].results[:2] %}
+        <div class="col-md-6">
+          <div class="card h-100">
+            <img src="{{ recipe.image }}" alt="{{ recipe.title }}" class="card-img-top recipe-img">
+            <div class="card-body">
+              <h5 class="card-title">{{ recipe.title }}</h5>
+              <p class="card-text recipe-summary">{{ recipe.summary }}</p>
+              <a href="{{ recipe.sourceUrl }}" target="_blank" class="btn btn-success btn-sm">View Recipe</a>
+            </div>
+          </div>
+        </div>
+      {% endfor %}
+    </div>
+  {% endfor %}
+</div>
+
+<style>
+  .recipe-img {
+    height: 150px;
+    object-fit: cover;
+  }
+
+  .card {
+    height: 100%;
+  }
+
+  .card-title {
+    font-size: 1.1rem;
+  }
+
+  .recipe-summary {
+    font-size: 0.9rem;
+  }
+</style>

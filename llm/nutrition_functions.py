@@ -8,7 +8,7 @@ dotenv.load_dotenv()
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 
-def get_recipes(diet, intolerances, minProtein, minCalories, maxCalories, minFat, maxFat) -> str:
+def get_recipes(diet, intolerances, minProtein, minCalories, maxCalories, minFat, maxFat, type : str) -> str:
     url = "https://api.spoonacular.com/recipes/complexSearch"
     params = {
         "diet": diet,
@@ -18,6 +18,7 @@ def get_recipes(diet, intolerances, minProtein, minCalories, maxCalories, minFat
         "maxCalories": maxCalories,
         "minFat": minFat,
         "maxFat": maxFat,
+        "type": type,
         "apiKey": os.getenv("SPOONACULAR")
     }
 
@@ -62,7 +63,7 @@ def main(current_weight, ideal_weight, body_composition, archetype, age, sex, al
             "type": "function",
             "function": {
                 "name": "get_recipes",
-                "description": "Get a list of recommended ingredients to make dishes out of, and give examples. The diet should be one of [vegetarian, lacto-vegetarian, ovo-vegetarian, vegan, pescetarian, paleo, primal]. The intolerances should be one of ["", dairy, egg, gluten, grain, peanut, seafood, sesame, shellfish, soy, sulfite, wheat]. If intolerances are not specified in the prompt, just use "". The minCalories shoulbe be >= 50, maxCalories should be <= 800, maxProtein should be <= 100, minFat >= 1, maxFat <= 100. Make sure you specify values for protein, calories, and fat that you think is best suited for them to achieve their goals.",
+                "description": "Get a list of recommended ingredients to make dishes out of, and give examples. The diet should be one of [vegetarian, lacto-vegetarian, ovo-vegetarian, vegan, pescetarian, paleo, primal]. The intolerances should be one of ["", dairy, egg, gluten, grain, peanut, seafood, sesame, shellfish, soy, sulfite, wheat]. If intolerances are not specified in the prompt, just use "". The minCalories shoulbe be >= 50, maxCalories should be <= 800, maxProtein should be <= 100, minFat >= 1, maxFat <= 100. Make sure you specify values for protein, calories, and fat that you think is best suited for them to achieve their goals. Type should be one of [breakfast, main course, dessert]",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -94,15 +95,19 @@ def main(current_weight, ideal_weight, body_composition, archetype, age, sex, al
                             "type": "string",
                             "description": "The maximum amount of fat in a meal they should consume to achiece their goals",
                         },
+                        "type": {
+                            "type": "string",
+                            "description": "The type of meal, i.e. breakfast, lunch, dinner"
+                        },
                     },
-                    "required": ["diet, intolerances, minProtein, minCalories, maxCalories, minFat, maxFat"],
+                    "required": ["diet, intolerances, minProtein, minCalories, maxCalories, minFat, maxFat", "type"],
                 },
             },
         }
     ]
 
     # Pre-load a message to begin the conversation
-    msg = f"I am {age} years old, {sex}, {body_composition} and follow a {diet} diet, I want to become {archetype}. My current weight is {current_weight} and I want to become {ideal_weight}. I am allergic to {allergies}. What should I eat? Also specify the ingredients required."
+    msg = f"I am {age} years old, {sex}, {body_composition} and follow a {diet} diet, I want to become {archetype}. My current weight is {current_weight} and I want to become {ideal_weight}. I am allergic to {allergies}. What should I eat for dessert?"
     messages = [
         {
             "role": "user",
@@ -119,7 +124,7 @@ def main(current_weight, ideal_weight, body_composition, archetype, age, sex, al
     # This works because OpenAI's API LLMs have been fine-tuned to understand and call functions - other LLMs, such as Llama, do not have this capability.
 
     # Uncomment the following line to see the response object
-    print(response)
+    # print(response)
 
     tool_responses = []
     for tool_call in response.tool_calls:
@@ -137,7 +142,7 @@ def main(current_weight, ideal_weight, body_composition, archetype, age, sex, al
         function_call += "\'" + (function_args)["minCalories"] + "\',"
         function_call += "\'" + (function_args)["maxCalories"] + "\',"
         function_call += "\'" + (function_args)["minFat"] + "\',"
-        function_call += "\'" + (function_args)["maxFat"] + "\')"
+        function_call += "\'" + (function_args)["maxFat"] + "\', " + "\'dessert\')"
 
         tool_response = eval(function_call)
         # print(f"Function returns: {tool_response}\n---")
