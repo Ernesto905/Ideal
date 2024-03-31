@@ -73,9 +73,10 @@ def dashboard():
 # Backend routes
 
 
-@app.route("/test_backend_garv", methods=["GET"])
+@app.route("/test_backend_garv", methods=["GET", "POST"])
 def test_the_backend_garv():
-    result_garv = test_backend_garv(session)
+    user_input = request.form["user_input"]
+    result_garv = test_backend_garv(session, user_input)
     return result_garv
 
 
@@ -84,6 +85,8 @@ def generate():
     print("------------------------------------------------------This should work")
     if request.method == "POST":
         user_input = request.form["user_input"]
+        result_garv = test_backend_garv(session, user_input)
+        print("Garv's answer ==========================",result_garv)
         response = get_completion(user_input)  # Assuming this function returns a string
         print(f"response is {response}")
         # Return HTML snippet for HTMX to inject
