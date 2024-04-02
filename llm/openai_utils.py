@@ -105,12 +105,12 @@ def main(session):
 
 
 # ----------------
-def test_backend_garv(session):
+def test_backend_garv(session, user_input):
     # Access session values
     current_weight = session.get("current_weight")
     ideal_weight = session.get("ideal_weight")
-    body_composition = session.get("body_composition")
-    archetype = session.get("archetype")
+    
+    archetype = session.get("body_goal")
     age = session.get("age")
     sex = session.get("sex")
     allergies = session.get("allergies")
@@ -122,12 +122,12 @@ def test_backend_garv(session):
     session_values = nutrition_functions.main(
         current_weight,
         ideal_weight,
-        body_composition,
         archetype,
         age,
         sex,
         allergies,
         diet,
+        user_input
     )
     print(f"The return from main is: {session_values}")
 
