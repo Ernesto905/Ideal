@@ -1,0 +1,36 @@
+{% if session.recipe_data %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-6">
+      <img src="{{ session.recipe_data.image }}" alt="{{ session.recipe_data.title }}" class="img-fluid mb-3">
+    </div>
+    <div class="col-md-6">
+      <h2>{{ session.recipe_data.title }}</h2>
+      <p><i class="bi bi-clock"></i> Preparation Time: {{ session.recipe_data.readyInMinutes }} minutes</p>
+      <p><i class="bi bi-people"></i> Servings: {{ session.recipe_data.servings }}</p>
+      <p><i class="bi bi-tag"></i> Diets: {{ session.recipe_data.diets|join(', ') }}</p>
+      <p><i class="bi bi-star"></i> Spoonacular Score: {{ session.recipe_data.spoonacularScore|round(1) }}/100.0</p>
+    </div>
+  </div>
+  <div class="row mt-4">
+    <div class="col-md-6">
+      <h4>Ingredients:</h4>
+      <ul>
+        {% for ingredient in session.recipe_data.extendedIngredients %}
+        <li>{{ ingredient.original }}</li>
+        {% endfor %}
+      </ul>
+    </div>
+    <div class="col-md-6">
+      <h4>Instructions:</h4>
+      <ol>
+        {% for step in session.recipe_data.analyzedInstructions[0].steps %}
+        <li>{{ step.step }}</li>
+        {% endfor %}
+      </ol>
+    </div>
+  </div>
+</div>
+{% else %}
+<p>No recipe details available.</p>
+{% endif %}

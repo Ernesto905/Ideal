@@ -5,6 +5,7 @@ from llm.openai_utils import (
     test_backend_garv,
 )
 from llm.calculations import calculate_daily_recommendations
+from llm.recipe_utils import get_recipe_details
 from dotenv import load_dotenv
 import os
 
@@ -48,22 +49,16 @@ def dashboard():
     print("Body Composition:", session["body_goal"])
     print("Age:", session["age"])
     print("Sex:", session["sex"])
-
     print("Allergies:", session["allergies"])
     print("Diet:", session["diet"])
     print("Religion:", session["religion"])
-
-    # print("Anything Else (Diet):", session["anything_else_diet"])
-
     print("Physical Impediments:", session["physical_impediments"])
 
     print("Daily calories", session["daily_calories"])
     print("Daily protein", session["daily_protein_grams"])
     print("Daily carbs", session["daily_carbs_grams"])
     print("Daily fats", session["daily_fats_grams"])
-    # For when Api is yes! :)
     recipes_list = display_recipes(session)
-    # print(f"recipes is: {recipes_list}")
     return render_template("dashboard/index.html", data=recipes_list)
 
     # For when no more api :(
@@ -86,9 +81,20 @@ def generate():
     if request.method == "POST":
         user_input = request.form["user_input"]
         result_garv = test_backend_garv(session, user_input)
-        print("Garv's answer ==========================",result_garv)
+        print("Garv's answer ==========================", result_garv)
         response = get_completion(user_input)  # Assuming this function returns a string
         print(f"response is {response}")
         # Return HTML snippet for HTMX to inject
         return f"<div id='chat-response' class='mb-3'>{response}</div>"
     return render_template("index.html")
+
+
+@app.route("/recipes", methods=["GET"])
+def recipes():
+    if request.method == "GET":
+        recipe_id = request.args.get("recipe_id")
+        if recipe_id:
+            # Pass the retrieved recipe data to the template for rendering in the modal
+            session["recipe_data"] = get_recipe_details(recipe_id)
+            return render_template("dashboard/recipe_details.html")
+    return ""

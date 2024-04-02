@@ -9,7 +9,7 @@
             <div class="card-body">
               <h5 class="card-title">{{ recipe.title }}</h5>
               <p class="card-text recipe-summary">{{ recipe.summary }}</p>
-              <a href="{{ recipe.sourceUrl }}" target="_blank" class="btn btn-success btn-sm">View Recipe</a>
+              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalCenter" hx-get="/recipes?recipe_id={{ recipe.id }}" hx-target="#recipe-modal-body" hx-trigger="click">Get Recipe</button>
             </div>
           </div>
         </div>
@@ -17,6 +17,28 @@
     </div>
   {% endfor %}
 </div>
+
+{# Recipe Modal #}
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
+
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Recipe Details</h5>
+      </div>
+      <div class="modal-body" id="recipe-modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
 
 <style>
   .recipe-img {

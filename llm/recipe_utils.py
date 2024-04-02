@@ -40,5 +40,14 @@ def get_recipes(religion, allergies, diet):
     }
 
 
-def nothing():
-    pass
+def get_recipe_details(id):
+    url = f"https://api.spoonacular.com/recipes/{id}/information"
+    params_id = {"apiKey": os.getenv("SPOONACULAR")}
+    response = requests.get(url, params=params_id)
+    print("Response i'm getting is:", response)
+    if response.status_code == 200:
+        print("Recipe Success: ", response.status_code)
+        return response.json()
+    else:
+        print("ERROR getting recipe:", response.status_code)
+        return {"Error": "No response available"}
