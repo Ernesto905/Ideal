@@ -58,16 +58,14 @@ def dashboard():
     print("Daily protein", session["daily_protein_grams"])
     print("Daily carbs", session["daily_carbs_grams"])
     print("Daily fats", session["daily_fats_grams"])
-    recipes_list = display_recipes(session)
-    return render_template("dashboard/index.html", data=recipes_list)
+    # recipes_list = display_recipes(session)
+    # return render_template("dashboard/index.html", data=recipes_list)
 
     # For when no more api :(
     return render_template("dashboard/index.html")
 
 
 # Backend routes
-
-
 @app.route("/test_backend_garv", methods=["GET", "POST"])
 def test_the_backend_garv():
     user_input = request.form["user_input"]
@@ -77,14 +75,12 @@ def test_the_backend_garv():
 
 @app.route("/generate", methods=["GET", "POST"])
 def generate():
-    print("------------------------------------------------------This should work")
     if request.method == "POST":
         user_input = request.form["user_input"]
         result_garv = test_backend_garv(session, user_input)
         print("Garv's answer ==========================", result_garv)
-        response = get_completion(user_input)  # Assuming this function returns a string
+        response = get_completion(user_input)
         print(f"response is {response}")
-        # Return HTML snippet for HTMX to inject
         return f"<div id='chat-response' class='mb-3'>{response}</div>"
     return render_template("index.html")
 
@@ -94,7 +90,6 @@ def recipes():
     if request.method == "GET":
         recipe_id = request.args.get("recipe_id")
         if recipe_id:
-            # Pass the retrieved recipe data to the template for rendering in the modal
             session["recipe_data"] = get_recipe_details(recipe_id)
             return render_template("dashboard/recipe_details.html")
     return ""
