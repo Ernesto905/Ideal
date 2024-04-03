@@ -44,25 +44,11 @@ def builder():
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
-    print("Current Weight:", session["current_weight"])
-    print("Ideal Weight:", session["ideal_weight"])
-    print("Body Composition:", session["body_goal"])
-    print("Age:", session["age"])
-    print("Sex:", session["sex"])
-    print("Allergies:", session["allergies"])
-    print("Diet:", session["diet"])
-    print("Religion:", session["religion"])
-    print("Physical Impediments:", session["physical_impediments"])
-
-    print("Daily calories", session["daily_calories"])
-    print("Daily protein", session["daily_protein_grams"])
-    print("Daily carbs", session["daily_carbs_grams"])
-    print("Daily fats", session["daily_fats_grams"])
-    # recipes_list = display_recipes(session)
-    # return render_template("dashboard/index.html", data=recipes_list)
+    recipes_list = display_recipes(session)
+    return render_template("dashboard/index.html", data=recipes_list)
 
     # For when no more api :(
-    return render_template("dashboard/index.html")
+    # return render_template("dashboard/index.html")
 
 
 # Backend routes
