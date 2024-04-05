@@ -88,6 +88,9 @@ h1, h2, h3, h4, h5, h6 {
               {% if session.get('religion', '') != '' %}
               <p>Religion: {{ session.get('religion') }}</p>
               {% endif %}
+              {% if session.get('physical_impediments', '') != '' %}
+              <p>Physical Impediments: {{ session.get('physical_impediments') }}</p>
+              {% endif %}
               <a href="/builder" class="btn btn-success btn-sm">Edit Stats</a>
             </div>
           </div>
@@ -127,7 +130,7 @@ h1, h2, h3, h4, h5, h6 {
               <div class="spinner-border text-success" role="status">
                 <span class="visually-hidden">Loading...</span>
               </div>
-              <p class="mt-2">Loading workouts ...</p>
+              <p class="mt-2">Loading Gainz...</p>
             </div>
           </div>
         </div>
@@ -145,20 +148,18 @@ h1, h2, h3, h4, h5, h6 {
         <h4 class="mb-0">Feeling Hungry?</h4>
       </div>
       <div class="card-body" style="height: 60vh; overflow-y: auto;">
+
         <div id="recipes-container">
-          {% if data %}
-            {% include 'dashboard/recipes.html' %}
-          {% else %}
-          <div class="text-center">
-            <div class="spinner-border text-success" role="status">
-              <span class="visually-hidden">Loading...</span>
+          <div hx-get="/generate-recipes" hx-trigger="load" hx-target="#recipes-container" hx-indicator=".spinner-border">
+            <div class="text-center">
+              <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Loading your delicious meals...</p>
             </div>
-            <p class="mt-2">Loading nutritional facts...</p>
           </div>
-
-          {% endif %}
-
         </div>
+
       </div>
     </div>
   </div>

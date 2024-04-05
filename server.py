@@ -1,20 +1,18 @@
 from flask import (
     Flask,
     render_template,
-    url_for,
     request,
     redirect,
     session,
-    jsonify,
 )
+from llm.nutrition_functions import get_recipes
 from llm.openai_utils import (
     complete_workout,
     get_completion,
-    display_recipes,
     test_backend_garv,
 )
 from llm.calculations import calculate_daily_recommendations
-from llm.recipe_utils import get_recipe_details
+from llm.recipe_utils import display_recipes_grid, get_recipe_details
 from dotenv import load_dotenv
 import os
 
@@ -52,8 +50,7 @@ def builder():
 
 @app.route("/dashboard", methods=["GET"])
 def dashboard():
-    recipes_list = display_recipes(session)
-    return render_template("dashboard/index.html", data=recipes_list)
+    return render_template("dashboard/index.html")
 
     # For when no more api :(
     # return render_template("dashboard/index.html")
@@ -64,6 +61,12 @@ def dashboard():
 def generate_workout():
     workout_list = complete_workout(session)
     return render_template("dashboard/workout.html", workout=workout_list)
+
+
+@app.route("/generate-recipes", methods=["GET"])
+def generate_recipes():
+    recipes_list = display_recipes_grid(session)
+    return render_template("dashboard/recipes.html", data=recipes_list)
 
 
 @app.route("/test_backend_garv", methods=["GET", "POST"])

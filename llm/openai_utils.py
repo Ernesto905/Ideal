@@ -3,7 +3,7 @@ from openai import OpenAI
 import dotenv
 import json
 from llm import recipe_utils, nutrition_functions
-from llm.workout_utils import get_system_msg, get_user_msg
+from llm.workout_utils import workout_system_msg, workout_user_msg
 
 dotenv.load_dotenv()
 client = OpenAI()
@@ -22,16 +22,6 @@ def get_completion(form_input):
     )
 
     return completion.choices[0].message
-
-
-def display_recipes(session):
-    allergies = session.get("allergies")
-    diet = session.get("diet")
-    religion = session.get("religion")
-
-    session_values = recipe_utils.get_recipes(religion, allergies, diet)
-
-    return session_values
 
 
 def initialize_nutrition_tools():
@@ -107,8 +97,8 @@ def complete_nutrition(session):
 
 
 def complete_workout(session):
-    user_message = get_user_msg(session)
-    system_message = get_system_msg()
+    user_message = workout_user_msg(session)
+    system_message = workout_system_msg()
     valid_json = False
     while not valid_json:
         response = client.chat.completions.create(
@@ -118,16 +108,12 @@ def complete_workout(session):
             temperature=0.5,
         )
         valid_json = is_json(response.choices[0].message.content)
-        print(
-            "THE JSON IS: ",
-            response.choices[0].message.content,
-            "----------------------------",
-        )
-        print("---------------------")
     return json.loads(response.choices[0].message.content)
 
 
-# ----------------
+# -------------------------------------------------
+# Helpers
+# -------------------------------------------------
 def is_json(myjson):
     try:
         json.loads(myjson)

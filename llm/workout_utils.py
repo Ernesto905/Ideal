@@ -1,4 +1,4 @@
-def get_user_msg(session) -> str:
+def workout_user_msg(session) -> str:
     user_msg = f""" 
     I am {session['age']} years old 
     I am a {session['sex']} 
@@ -13,7 +13,7 @@ def get_user_msg(session) -> str:
     return user_message
 
 
-def get_system_msg() -> str:
+def workout_system_msg() -> str:
     system_msg = """
     You are an expert in exercise science designed to output workout plans in JSON.
     You will take in user input and output the exercises in the exact following format:
