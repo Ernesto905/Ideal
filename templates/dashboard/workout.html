@@ -1,0 +1,25 @@
+{% for day, workouts in workout.week.items() %}
+  <div class="workout-day">
+    <h3>{{ day | title }}</h3>
+    {% if workouts == "rest day" %}
+      <p>Rest Day</p>
+    {% else %}
+      {% for workout in workouts %}
+        <div class="workout">
+          <h4>{{ workout.muscleGroup }}</h4>
+          <ul class="exercises">
+            {% for exercise in workout.exercises %}
+              <li>
+                <strong>{{ exercise.name }}</strong>
+                <ul>
+                  <li>Equipment: {{ exercise.equipment }}</li>
+                  <li>Instructions: {{ exercise.instructions }}</li>
+                </ul>
+              </li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endfor %}
+    {% endif %}
+  </div>
+{% endfor %}

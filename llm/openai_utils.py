@@ -1,6 +1,9 @@
+from flask import jsonify
 from openai import OpenAI
 import dotenv
+import json
 from llm import recipe_utils, nutrition_functions
+from llm.workout_utils import get_system_msg, get_user_msg
 
 dotenv.load_dotenv()
 client = OpenAI()
@@ -31,8 +34,7 @@ def display_recipes(session):
     return session_values
 
 
-def initialize_tools():
-
+def initialize_nutrition_tools():
     return [
         {
             "type": "function",
@@ -87,13 +89,13 @@ def initialize_tools():
     ]
 
 
-def main(session):
+def complete_nutrition(session):
 
     # Pre-load a message to begin the conversation
     msg = f"""
-        I follow a {session.get("diet")} diet, my allergies are {session.get("allergies")}, and my religion is {session.get("religion")}. 
-        Recite to me what my diet, allergies, and religion are.
-        """
+    I follow a {session['diet']} diet, my allergies are {session['allergies']}, and my religion is {session['religion']}. 
+    Recite to me what my diet, allergies, and religion are.
+    """
     messages = [{"role": "user", "content": msg}]
 
     # To be implemented with tools
@@ -104,12 +106,41 @@ def main(session):
     return response
 
 
+def complete_workout(session):
+    user_message = get_user_msg(session)
+    system_message = get_system_msg()
+    valid_json = False
+    while not valid_json:
+        response = client.chat.completions.create(
+            model="gpt-4-turbo-preview",
+            response_format={"type": "json_object"},
+            messages=[system_message, user_message],
+            temperature=0.5,
+        )
+        valid_json = is_json(response.choices[0].message.content)
+        print(
+            "THE JSON IS: ",
+            response.choices[0].message.content,
+            "----------------------------",
+        )
+        print("---------------------")
+    return json.loads(response.choices[0].message.content)
+
+
 # ----------------
+def is_json(myjson):
+    try:
+        json.loads(myjson)
+    except ValueError as e:
+        return False
+    return True
+
+
 def test_backend_garv(session, user_input):
     # Access session values
     current_weight = session.get("current_weight")
     ideal_weight = session.get("ideal_weight")
-    
+
     archetype = session.get("body_goal")
     age = session.get("age")
     sex = session.get("sex")
@@ -120,14 +151,7 @@ def test_backend_garv(session, user_input):
     physical_impediments = session.get("physical_impediments")
 
     session_values = nutrition_functions.main(
-        current_weight,
-        ideal_weight,
-        archetype,
-        age,
-        sex,
-        allergies,
-        diet,
-        user_input
+        current_weight, ideal_weight, archetype, age, sex, allergies, diet, user_input
     )
     print(f"The return from main is: {session_values}")
 

@@ -121,7 +121,16 @@ h1, h2, h3, h4, h5, h6 {
       </div>
       <div class="card-body" style="height: 50vh; overflow-y: auto;">
 
-        {# Text goes here #}
+        <div id="workout-container">
+          <div hx-get="/generate-workout" hx-trigger="load" hx-target="#workout-container" hx-indicator=".spinner-border">
+            <div class="text-center">
+              <div class="spinner-border text-success" role="status">
+                <span class="visually-hidden">Loading...</span>
+              </div>
+              <p class="mt-2">Loading workouts ...</p>
+            </div>
+          </div>
+        </div>
 
       </div>
     </div>

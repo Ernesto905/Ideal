@@ -1,5 +1,14 @@
-from flask import Flask, render_template, url_for, request, redirect, session, jsonify
+from flask import (
+    Flask,
+    render_template,
+    url_for,
+    request,
+    redirect,
+    session,
+    jsonify,
+)
 from llm.openai_utils import (
+    complete_workout,
     get_completion,
     display_recipes,
     test_backend_garv,
@@ -8,7 +17,6 @@ from llm.calculations import calculate_daily_recommendations
 from llm.recipe_utils import get_recipe_details
 from dotenv import load_dotenv
 import os
-
 
 load_dotenv()
 
@@ -52,6 +60,12 @@ def dashboard():
 
 
 # Backend routes
+@app.route("/generate-workout", methods=["GET"])
+def generate_workout():
+    workout_list = complete_workout(session)
+    return render_template("dashboard/workout.html", workout=workout_list)
+
+
 @app.route("/test_backend_garv", methods=["GET", "POST"])
 def test_the_backend_garv():
     user_input = request.form["user_input"]
@@ -63,10 +77,8 @@ def test_the_backend_garv():
 def generate():
     if request.method == "POST":
         user_input = request.form["user_input"]
-        result_garv = test_backend_garv(session, user_input)
-        print("Garv's answer ==========================", result_garv)
+        # result_garv = test_backend_garv(session, user_input)
         response = get_completion(user_input)
-        print(f"response is {response}")
         return f"<div id='chat-response' class='mb-3'>{response}</div>"
     return render_template("index.html")
 
