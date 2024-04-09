@@ -91,3 +91,10 @@ def calculate_daily_recommendations(session):
     session["daily_protein_grams"] = round(daily_protein_grams)
     session["daily_carbs_grams"] = round(daily_carbs_grams)
     session["daily_fats_grams"] = round(daily_fats_grams)
+
+
+def count_nutrients(recipe, session):
+    session["daily_calories"] -= int(recipe["calories"])
+    session["daily_protein_grams"] -= int(recipe["protein"].rstrip("g"))
+    session["daily_carbs_grams"] -= int(recipe["carbs"].rstrip("g"))
+    session["daily_fats_grams"] -= int(recipe["fat"].rstrip("g"))

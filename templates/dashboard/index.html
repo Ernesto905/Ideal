@@ -59,6 +59,7 @@ h1, h2, h3, h4, h5, h6 {
       <div class="card-body" style="height: 50vh; overflow-y: auto;">
         <div class="row">
           <div class="col-md-6">
+
             <div class="card-body">
               <h3>Personal Information</h3>
               {% if session.get('current_weight', '') != '' %}
@@ -93,22 +94,15 @@ h1, h2, h3, h4, h5, h6 {
               {% endif %}
               <a href="/builder" class="btn btn-success btn-sm">Edit Stats</a>
             </div>
+            
           </div>
           <div class="col-md-6">
             <div class="card-body">
-              <h3>Daily Nutrients Left</h3>
-              {% if session.get('daily_calories', '') != '' %}
-              <p>Daily calories: {{ session.get('daily_calories') }}</p>
-              {% endif %}
-              {% if session.get('daily_protein_grams', '') != '' %}
-              <p>Protein: {{ session.get('daily_carbs_grams') }} grams</p>
-              {% endif %}
-              {% if session.get('daily_carbs_grams', '') != '' %}
-              <p>Carbohydrate: {{ session.get('daily_carbs_grams') }} grams</p>
-              {% endif %}
-              {% if session.get('daily_fats_grams', '') != '' %}
-              <p>Fats: {{ session.get('daily_fats_grams') }} grams</p>
-              {% endif %}
+
+              <div id="nutrients_left">
+                <div id="nutrients_list" hx-trigger="load" hx-get="/get_nutrients" hx-target="#nutrients_left">
+                </div>
+              </div>
               <a class="btn btn-success btn-sm">Edit Nutrients</a>
             </div>
           </div>
@@ -183,12 +177,7 @@ h1, h2, h3, h4, h5, h6 {
             <div class="input-group">
               <input type="text" class="form-control" name="user_input" placeholder="Type your message...">
               <div class="input-group-append">
-                {# 
                 <button class="btn btn-primary" type="submit">Send</button>
-                <button class="btn btn-primary" type="submit">Send</button>
-                #}
-                <button class="btn btn-primary" type="submit">Send</button>
-                {# <button class="btn btn-primary" hx-get="/test_backend_garv" type="submit" hx-target="#result">Send</button> #}
               </div>
             </div>
           </form>

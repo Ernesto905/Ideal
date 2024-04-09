@@ -5,14 +5,17 @@ from flask import (
     redirect,
     session,
 )
-from llm.nutrition_functions import get_recipes
 from llm.openai_utils import (
     complete_workout,
     get_completion,
     test_backend_garv,
 )
-from llm.calculations import calculate_daily_recommendations
-from llm.recipe_utils import display_recipes_grid, get_recipe_details
+from llm.calculations import calculate_daily_recommendations, count_nutrients
+from llm.recipe_utils import (
+    display_recipes_grid,
+    get_recipe_details,
+    get_recipe_nutrients,
+)
 from dotenv import load_dotenv
 import os
 
@@ -56,6 +59,11 @@ def dashboard():
     # return render_template("dashboard/index.html")
 
 
+@app.route("/get_nutrients", methods=["GET"])
+def get_nutrients():
+    return render_template("dashboard/nutrients_left.html")
+
+
 # Backend routes
 @app.route("/generate-workout", methods=["GET"])
 def generate_workout():
@@ -93,4 +101,14 @@ def recipes():
         if recipe_id:
             session["recipe_data"] = get_recipe_details(recipe_id)
             return render_template("dashboard/recipe_details.html")
-    return ""
+    return "Error", 404
+
+
+@app.route("/update_nutrients", methods=["POST"])
+def update_nutrients():
+    recipe_id = request.args.get("recipe_id")
+    recipe = get_recipe_nutrients(recipe_id)
+    if recipe:
+        count_nutrients(recipe, session)
+        return render_template("dashboard/nutrients_left.html")
+    return "Error", 404
