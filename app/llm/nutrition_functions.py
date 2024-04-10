@@ -60,9 +60,7 @@ def get_completion(messages, model="gpt-4", temperature=0, max_tokens=300, tools
     return response.choices[0].message
 
 
-def main(
-    current_weight, ideal_weight, archetype, age, sex, allergies, diet, user_input
-):
+def main(allergies, diet, religion, user_input):
     # Define the toolsif __name__ == "__main__" that we want to use
     # This is defined in JSON format for the OpenAI API
     openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -71,9 +69,7 @@ def main(
             "type": "function",
             "function": {
                 "name": "get_recipes",
-                "description": "Get a list of recommended ingredients to make dishes out of, and give examples. Be sure to specify values for minFat, maxFat, minProtein, minCalories, and maxCalories that you think is best suited to achieve their goals. The diet should be one of ['', vegetarian, lacto-vegetarian, ovo-vegetarian, vegan, pescetarian, paleo, primal]. The intolerances should be one of ["
-                ", dairy, egg, gluten, grain, peanut, seafood, sesame, shellfish, soy, sulfite, wheat]. If intolerances are not specified in the prompt, just use "
-                ". The minCalories should be be >= 200, maxCalories should be <= 800, maxProtein should be <= 100, minFat >= 1, maxFat <= 100. Type should be one of [breakfast, main course, dessert]",
+                "description": "Get back a recipe recipes for a user based on their dietary restrictions and nutrition specification as input.",
                 "parameters": {
                     "type": "object",
                     "properties": {
@@ -110,39 +106,39 @@ def main(
                             "description": "The type of meal, i.e. breakfast, lunch, dinner",
                         },
                     },
-                    "required": [
-                        "minProtein, minCalories, maxCalories, minFat, maxFat"
-                    ],
+                    "required": [],
                 },
             },
         }
     ]
 
+    diet_string = f"I follow a {diet} diet." if diet else ""
+    allergy_string = f"I am allergic to {allergies}." if allergies else ""
+    religion_string = f"I am religious. My religion is {religion}" if religion else ""
+
     # Pre-load a message to begin the conversation
     msg = (
-        f"I am {age} years old, {sex}, and follow a {diet} diet, I want to {archetype}. My current weight is {current_weight} and I want to become {ideal_weight}. I am allergic to {allergies}. "
+        f"{diet_string}. {allergy_string}"
         + user_input
-        + ". What should I eat? Use only the tools available. If the tools aren't available then return a 'Im sorry i dont have access to the tools for that'"
+        + ". What should I eat? Use only the tools available. If the tools aren't available then return a 'Im sorry i dont have access to the tools for that'. Your output should be in the form of a single recipe. It should be in markdown and you should ensure the image is on a different line than the rest of the recipe's information."
     )
+
     print(msg)
     messages = [{"role": "user", "content": msg}]
-    # print(f"User: {msg}\n---")
 
     response = get_completion(messages, tools=tools)
-
-    # Now, we need to parse the response - the response will contain a TOOL CALL, rather than a completion.
-    # The TOOL CALL tells us the function (and appropriate arguments) that the LLM wants to call.
-    # This works because OpenAI's API LLMs have been fine-tuned to understand and call functions - other LLMs, such as Llama, do not have this capability.
-
-    # Uncomment the following line to see the response object
-    # print(response)
 
     tool_responses = []
     for tool_call in response.tool_calls:
         function_name = tool_call.function.name
         function_args = eval(tool_call.function.arguments)
 
-        function_call = function_name + "('" + (function_args)["diet"] + "',"
+        function_call = function_name + "("
+
+        if "diet" in function_args:
+            function_call += "'" + (function_args)["diet"] + "',"
+        else:
+            function_call += "'', "
 
         if "intolerances" in function_args:
             function_call += "'" + (function_args)["intolerances"] + "',"
@@ -175,14 +171,13 @@ def main(
             function_call += "'100',"
 
         if "type" in function_args:
-            function_call += "'" + (function_args)["type"] + "')"
+            function_call += "'" + (function_args)["type"] + "'"
         else:
-            function_call += "'" + "')"
-
-        print(function_call)
+            function_call += "'" + "'"
+        function_call += ")"
+        print("Funtion call: ", function_call)
 
         tool_response = eval(function_call)
-        # print(f"Function returns: {tool_response}\n---")
         tool_responses.append(
             {"function_name": function_name, "tool_response": tool_response}
         )

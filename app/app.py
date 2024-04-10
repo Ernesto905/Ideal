@@ -5,6 +5,8 @@ from flask import (
     redirect,
     session,
 )
+import markdown
+from llm.nutrition_functions import main
 from llm.openai_utils import (
     complete_workout,
     get_completion,
@@ -87,10 +89,18 @@ def test_the_backend_garv():
 @app.route("/generate", methods=["GET", "POST"])
 def generate():
     if request.method == "POST":
+
         user_input = request.form["user_input"]
-        # result_garv = test_backend_garv(session, user_input)
-        response = get_completion(user_input)
-        return f"<div id='chat-response' class='mb-3'>{response}</div>"
+        response = main(
+            session["allergies"], session["diet"], session["religion"], user_input
+        )  # Wrap the response in a Bootstrap card component
+
+        md_template_string = markdown.markdown(response, output_format="html")
+        # return md_template_string
+        return f"<div id='chat-response' class='mb-3'>{md_template_string}</div>"
+
+        # return f"<div id='chat-response' class='mb-3'>{md_template_string}</div>"
+
     return render_template("index.html")
 
 
