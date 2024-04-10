@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<style>
+  .section {
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 0.5s ease-in-out;
+    mask-image: linear-gradient(to bottom, black 70%, transparent 100%);
+  }
+
+  .section.active img {
+    opacity: 1;
+  }
+
+  .section .content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    padding: 20px;
+  }
+
+  .section .content h1 {
+    font-size: 32px;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+
+  .section .content p {
+    font-size: 18px;
+    margin-bottom: 20px;
+  }
+
+  .btn-success {
+    background-color: #28a745;
+    border-color: #28a745;
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  .btn-success:hover {
+    background-color: #218838;
+    border-color: #1e7e34;
+  }
+
+  .text-shadow {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+  }
+
+  .bg-overlay {
+    background-color: rgba(255, 255, 255, 0.7);
+    padding: 20px;
+    border-radius: 10px;
+  }
+</style>
+
+<div class="section active">
+  <img src="/static/FitCouple.png" alt="Fit Couple" class="img-fluid">
+  <div class="content">
+    <h1 class="text-white text-shadow">Achieve Your Fitness Goals</h1>
+    <p class="text-white text-shadow">with Personalized AI-Powered Plans</p>
+    <a href="{{ url_for('builder') }}" class="btn btn-success">Get Started</a>
+  </div>
+</div>
+
+<div class="section">
+  <img src="/static/OldRunner.png" alt="Old Runner" class="img-fluid">
+  <div class="content">
+    <h1 class="text-white text-shadow">Transform Your Body and Mind</h1>
+    <p class="text-white text-shadow">Tailored to your unique needs and goals.</p>
+  </div>
+</div>
+
+<div class="section">
+  <img src="/static/MuslimFamily.png" alt="Muslim Family" class="img-fluid">
+  <div class="content">
+    <h1 class="text-white text-shadow">Fitness for Every Lifestyle</h1>
+    <p class="text-white text-shadow">Adapts to your lifestyle and helps you succeed.</p>
+    <a href="{{ url_for('builder') }}" class="btn btn-success">Get Started</a>
+  </div>
+</div>
+
+<script>
+  const sections = document.querySelectorAll('.section');
+
+  window.addEventListener('scroll', () => {
+    const scrollPosition = window.pageYOffset;
+
+    sections.forEach((section, index) => {
+      const sectionTop = section.offsetTop;
+      const sectionHeight = section.offsetHeight;
+
+      if (scrollPosition >= sectionTop - sectionHeight / 2 && scrollPosition < sectionTop + sectionHeight / 2) {
+        section.classList.add('active');
+      } else {
+        section.classList.remove('active');
+      }
+    });
+  });
+</script>
+{% endblock %}

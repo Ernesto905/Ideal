@@ -112,3 +112,7 @@ def update_nutrients():
         count_nutrients(recipe, session)
         return render_template("dashboard/nutrients_left.html")
     return "Error", 404
+
+
+if __name__ == "__main__":
+    app.run(host="0.0.0.9")
