@@ -101,15 +101,15 @@
             <div id="letsWorkOn" style="display: none;">
               <div class="mb-3">
                 <label for="age" class="form-label">Age</label>
-                <input type="text" class="form-control" id="age" name="age" required>
+                <input type="number" class="form-control" id="age" name="age" min="13" max="99" required>
               </div>
               <div class="mb-3">
                 <label for="height" class="form-label">Height (cm)</label>
-                <input type="text" class="form-control" id="height" name="height" required>
+                <input type="number" class="form-control" id="height" name="height" min="140" max="200" required>
               </div>
               <div class="mb-3 ">
                 <label for="current_weight" class="form-label">Current Weight (lb)</label>
-                <input type="text" class="form-control" id="current_weight" name="current_weight" required>
+                <input type="number" class="form-control" id="current_weight" name="current_weight" min="99" max="300" required>
               </div>
 
               <div class="mb-3 ">
@@ -182,7 +182,7 @@
             <div id="letsWorkOn2" style="display: none;">
               <div class="mb-3 ">
                 <label for="ideal_weight" class="form-label">Ideal Weight</label>
-                <input type="text" class="form-control" id="ideal_weight" name="ideal_weight" required>
+                <input type="number" class="form-control" id="ideal_weight" name="ideal_weight" min="99" max="300" required>
               </div>
               <div class="mb-3">
                 <label class="form-label">Personal fitness goals</label>
@@ -266,13 +266,18 @@
     const submitBtn = document.querySelector('button[type="submit"]');
 
     function checkStep1Fields() {
-      const age = document.getElementById('age').value;
-      const height = document.getElementById('height').value;
-      const currentWeight = document.getElementById('current_weight').value;
+      const age = parseInt(document.getElementById('age').value, 10);
+      const height = parseInt(document.getElementById('height').value, 10); // in centimeters
+      const currentWeight = parseInt(document.getElementById('current_weight').value, 10); // in pounds
       const sex = document.getElementById('sex').value;
 
+      const isAgeNormal = age >= 13 && age <= 99;
+      const isHeightNormal = height >= 140 && height <= 200;
+      const isWeightNormal = currentWeight >= 99 && currentWeight <= 300;
+      
 
-      if (age && currentWeight && sex && height) {
+
+      if (age && currentWeight && sex && height && isAgeNormal && isHeightNormal && isWeightNormal) {
         nextBtn.disabled = false;
       } else {
         nextBtn.disabled = true;
@@ -280,10 +285,12 @@
     }
 
     function checkStep2Fields() {
-      const idealWeight = document.getElementById('ideal_weight').value;
+      const idealWeight = parseInt(document.getElementById('ideal_weight').value, 10);
       const bodyComposition = document.getElementById('body_goal').value;
 
-      if (idealWeight && bodyComposition) {
+      const isWeightNormal = idealWeight >= 99 && idealWeight <= 300;
+
+      if (idealWeight && bodyComposition && isWeightNormal) {
         submitBtn.disabled = false;
       } else {
         submitBtn.disabled = true;

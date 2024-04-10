@@ -1,13 +1,13 @@
 <h3>Daily Nutrients Left</h3>
 {% if session.get('daily_calories', '') != '' %}
-  <p>Daily calories: {{ session.get('daily_calories') }}</p>
+  <p>Daily calories: {{ session.get('daily_calories') if session.get('daily_calories') > 0 else 0 }}</p>
 {% endif %}
 {% if session.get('daily_protein_grams', '') != '' %}
-  <p>Protein: {{ session.get('daily_carbs_grams') }} grams</p>
+  <p>Protein: {{ session.get('daily_protein_grams') if session.get('daily_protein_grams') > 0 else 0 }} grams</p>
 {% endif %}
 {% if session.get('daily_carbs_grams', '') != '' %}
-  <p>Carbohydrate: {{ session.get('daily_carbs_grams') }} grams</p>
+  <p>Carbohydrate: {{ session.get('daily_carbs_grams') if session.get('daily_carbs_grams') > 0 else 0 }} grams</p>
 {% endif %}
 {% if session.get('daily_fats_grams', '') != '' %}
-  <p>Fats: {{ session.get('daily_fats_grams') }} grams</p>
+  <p>Fats: {{ session.get('daily_fats_grams') if session.get('daily_fats_grams') > 0 else 0 }} grams</p>
 {% endif %}
