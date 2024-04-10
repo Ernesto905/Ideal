@@ -79,25 +79,32 @@ def generate_recipes():
     return render_template("dashboard/recipes.html", data=recipes_list)
 
 
-@app.route("/test_backend_garv", methods=["GET", "POST"])
-def test_the_backend_garv():
-    user_input = request.form["user_input"]
-    result_garv = test_backend_garv(session, user_input)
-    return result_garv
-
-
 @app.route("/generate", methods=["GET", "POST"])
 def generate():
     if request.method == "POST":
 
         user_input = request.form["user_input"]
-        response = main(
+        response, recipeId = main(
             session["allergies"], session["diet"], session["religion"], user_input
         )  # Wrap the response in a Bootstrap card component
 
         md_template_string = markdown.markdown(response, output_format="html")
         # return md_template_string
-        return f"<div id='chat-response' class='mb-3'>{md_template_string}</div>"
+        return f"""
+
+            <div class="container mt-3 justify-content-center"> 
+                <div id='chat-response' class='mb-3 justify-content-center'>{md_template_string}</div>
+                <div class="row mb-3">
+                    <div class="col-6 d-flex justify-content-end pr-2"> 
+                        <button type="button" class="btn btn-success" hx-target="#nutrients_left" hx-post="/update_nutrients?recipe_id={recipeId}" hx-trigger="click">Eat me!</button>
+                    </div>
+                    <div class="col-6 d-flex justify-content-start pl-2">
+                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" hx-get="/recipes?recipe_id={recipeId}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
+                    </div>
+                </div>
+            </div>
+
+            """
 
         # return f"<div id='chat-response' class='mb-3'>{md_template_string}</div>"
 
@@ -108,8 +115,10 @@ def generate():
 def recipes():
     if request.method == "GET":
         recipe_id = request.args.get("recipe_id")
+        print("Trying to get recipe data", recipe_id)
         if recipe_id:
             session["recipe_data"] = get_recipe_details(recipe_id)
+            print("Session found, it's", session["recipe_data"])
             return render_template("dashboard/recipe_details.html")
     return "Error", 404
 

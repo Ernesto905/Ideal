@@ -41,12 +41,11 @@ def get_recipes(
         id = recipe["id"]
 
         # Construct the string format
-        recipe_info = f"Dish 1: {dish_title}\nImage: {image_url}\nCalories: {calories}{calories_unit}\nProtein: {protein}{protein_unit}\nFat: {fat}{fat_unit}\n"
-        # print(recipe_info)
+        recipe_info = f"Dish: {dish_title}\nImage: {image_url}\nCalories: {calories}{calories_unit}\nProtein: {protein}{protein_unit}\nFat: {fat}{fat_unit}\n"
 
     else:
         print("Error:", response.status_code)
-    return recipe_info
+    return recipe_info, id
 
 
 def get_completion(messages, model="gpt-4", temperature=0, max_tokens=300, tools=None):
@@ -177,7 +176,7 @@ def main(allergies, diet, religion, user_input):
         function_call += ")"
         print("Funtion call: ", function_call)
 
-        tool_response = eval(function_call)
+        tool_response, recipe_id = eval(function_call)
         tool_responses.append(
             {"function_name": function_name, "tool_response": tool_response}
         )
@@ -201,4 +200,4 @@ def main(allergies, diet, religion, user_input):
     response = get_completion(messages, tools=tools)
 
     # print(f"AI: {response.content}\n---")
-    return response.content
+    return response.content, recipe_id
