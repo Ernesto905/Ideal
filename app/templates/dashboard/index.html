@@ -96,6 +96,7 @@ h1, h2, h3, h4, h5, h6 {
             </div>
             
           </div>
+
           <div class="col-md-6">
             <div class="card-body">
 
@@ -103,9 +104,58 @@ h1, h2, h3, h4, h5, h6 {
                 <div id="nutrients_list" hx-trigger="load" hx-get="/get_nutrients" hx-target="#nutrients_left">
                 </div>
               </div>
-              <a class="btn btn-success btn-sm">Edit Nutrients</a>
+
+
+
+
+              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
+                Edit Nutrients
+              </button>
+
+              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Edit Nutrients</h5>
+                    </div>
+                    <div class="modal-body">
+
+                      <form id="nutrientForm" >
+
+                        <div class="mb-3">
+                          <label for="calories" class="form-label">Calories</label>
+                          <input type="number" class="form-control" id="calories" name="calories" min="0" max="10000" required value="{{ session.get('daily_calories', '') }}">
+                        </div>
+                        <div class="mb-3">
+                          <label for="protein" class="form-label">Protein</label>
+                          <input type="number" class="form-control" id="protein" name="protein" min="0" max="500" required value="{{ session.get('daily_protein_grams', '') }}">
+                        </div>
+                        <div class="mb-3 ">
+                          <label for="carbohydrates" class="form-label">Carbs</label>
+                          <input type="number" class="form-control" id="carbohydrates" name="carbohydrates" min="0" max="500" required value="{{ session.get('daily_carbs_grams', '') }}">
+                        </div>
+                        <div class="mb-3 ">
+                          <label for="fats" class="form-label">Fats</label>
+                          <input type="number" class="form-control" id="fats" name="fats" min="0" max="500" required value="{{ session.get('daily_fats_grams', '') }}">
+                        </div>
+
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                          <button type="submit" hx-post="/userInputNutrients" class="btn btn-primary" data-dismiss="modal" hx-trigger="click" hx-target="#nutrients_left">Save changes</button>
+                        </div>
+                      </form>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+
+
             </div>
           </div>
+
         </div>
       </div>
     </div>
@@ -190,10 +240,5 @@ h1, h2, h3, h4, h5, h6 {
   </div>
 </div>
 
-<button class="btn btn-primary mt-4" hx-get="/test_backend" hx-target="#result">Test the Backend Session Values</button>
-<div id="result"></div>
-
-<button class="btn btn-secondary mt-2" hx-get="/test_backend_garv" hx-target="#result">Test the Backend Session Values (Garv)</button>
-<div id="result_garv"></div>
 {% endblock %}
 

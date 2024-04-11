@@ -10,7 +10,6 @@ from llm.nutrition_functions import main
 from llm.openai_utils import (
     complete_workout,
     get_completion,
-    test_backend_garv,
 )
 from llm.calculations import calculate_daily_recommendations, count_nutrients
 from llm.recipe_utils import (
@@ -57,9 +56,6 @@ def builder():
 def dashboard():
     return render_template("dashboard/index.html")
 
-    # For when no more api :(
-    # return render_template("dashboard/index.html")
-
 
 @app.route("/get_nutrients", methods=["GET"])
 def get_nutrients():
@@ -75,6 +71,10 @@ def generate_workout():
 
 @app.route("/generate-recipes", methods=["GET"])
 def generate_recipes():
+
+    # for when no api
+    return {}
+
     recipes_list = display_recipes_grid(session)
     return render_template("dashboard/recipes.html", data=recipes_list)
 
@@ -106,8 +106,6 @@ def generate():
 
             """
 
-        # return f"<div id='chat-response' class='mb-3'>{md_template_string}</div>"
-
     return render_template("index.html")
 
 
@@ -115,10 +113,8 @@ def generate():
 def recipes():
     if request.method == "GET":
         recipe_id = request.args.get("recipe_id")
-        print("Trying to get recipe data", recipe_id)
         if recipe_id:
             session["recipe_data"] = get_recipe_details(recipe_id)
-            print("Session found, it's", session["recipe_data"])
             return render_template("dashboard/recipe_details.html")
     return "Error", 404
 
@@ -131,6 +127,17 @@ def update_nutrients():
         count_nutrients(recipe, session)
         return render_template("dashboard/nutrients_left.html")
     return "Error", 404
+
+
+@app.route("/userInputNutrients", methods=["POST"])
+def userInputNutrients():
+    session["daily_calories"] = int(request.form.get("calories"))
+    session["daily_protein_grams"] = int(request.form.get("protein"))
+    session["daily_carbs_grams"] = int(request.form.get("carbohydrates"))
+    session["daily_fats_grams"] = int(request.form.get("fats"))
+    print("Here")
+    return render_template("dashboard/nutrients_left.html")
+    return "", 200
 
 
 if __name__ == "__main__":
