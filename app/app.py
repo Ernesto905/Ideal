@@ -65,6 +65,10 @@ def get_nutrients():
 # Backend routes
 @app.route("/generate-workout", methods=["GET"])
 def generate_workout():
+
+    # For when save money
+    # return {}
+
     workout_list = complete_workout(session)
     return render_template("dashboard/workout.html", workout=workout_list)
 
@@ -73,7 +77,7 @@ def generate_workout():
 def generate_recipes():
 
     # for when no api
-    return {}
+    # return {}
 
     recipes_list = display_recipes_grid(session)
     return render_template("dashboard/recipes.html", data=recipes_list)
@@ -141,4 +145,4 @@ def userInputNutrients():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.9")
+    app.run(host="0.0.0.0", port=5000)
