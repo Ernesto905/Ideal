@@ -8,3 +8,6 @@ venv
 
 # Misc
 old_chatbot_html
+
+# Deployment 
+gcp_key.json
