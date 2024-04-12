@@ -11,22 +11,16 @@ def calculate_bmr(weight_lbs, height_cm, age, sex):
 def calculate_daily_calories(bmr, body_goal):
     # Assume a fixed activity level for moderate exercise
     activity_level = 1.0  # This corresponds to moderate exercise/activity
-    print("Your body goal is: ", body_goal)
 
     if body_goal == "Trim Excess Fat":
-        print("Trim excesdfs ")
         calorie_factor = 0.95
     elif body_goal == "Build Lean Mass":
-        print("elena muscle mass")
-        calorie_factor = 1.2
-    elif body_goal == "Increase Strength":
-        print("Incr stre")
         calorie_factor = 1.3
+    elif body_goal == "Increase Strength":
+        calorie_factor = 1.4
     elif body_goal == "Improve Endurance":
-        print("Endureacn")
-        calorie_factor = 1.0
+        calorie_factor = 1.2
     else:  # "boost overall fitness"
-        print("Else !!!")
         calorie_factor = 1.0
 
     daily_calories = bmr * activity_level * calorie_factor
@@ -35,27 +29,22 @@ def calculate_daily_calories(bmr, body_goal):
 
 def calculate_daily_macros(daily_calories, body_goal):
     if body_goal == "Trim Excess Fat":
-        print("Trim excesdfs ")
         protein_percentage = 0.35
         carbs_percentage = 0.4
         fats_percentage = 0.25
     elif body_goal == "Build Lean Mass":
-        print("lean musc")
         protein_percentage = 0.3
         carbs_percentage = 0.5
         fats_percentage = 0.2
     elif body_goal == "Increase Strength":
-        print("INC STR")
         protein_percentage = 0.35
         carbs_percentage = 0.45
         fats_percentage = 0.2
     elif body_goal == "Improve Endurance":
-        print("IMPR END")
         protein_percentage = 0.2
         carbs_percentage = 0.6
         fats_percentage = 0.2
     else:  # "boost overall fitness"
-        print("ELSE sc")
         protein_percentage = 0.25
         carbs_percentage = 0.5
         fats_percentage = 0.25
@@ -76,7 +65,6 @@ def calculate_daily_recommendations(session):
 
     # Calculate BMR
     bmr = calculate_bmr(current_weight_lbs, height_cm, age, sex)
-    print("------------------- BMR is", bmr)
 
     # Calculate daily calorie intake
     daily_calories = calculate_daily_calories(bmr, body_goal)
@@ -94,19 +82,7 @@ def calculate_daily_recommendations(session):
 
 
 def count_nutrients(recipe, session):
-    print("Values before:")
-    print("daily_calories:", session["daily_calories"])
-    print("daily_protein_grams:", session["daily_protein_grams"])
-    print("daily_carbs_grams:", session["daily_carbs_grams"])
-    print("daily_fats_grams:", session["daily_fats_grams"])
-
     session["daily_calories"] -= int(recipe["calories"])
     session["daily_protein_grams"] -= int(recipe["protein"].rstrip("g"))
     session["daily_carbs_grams"] -= int(recipe["carbs"].rstrip("g"))
     session["daily_fats_grams"] -= int(recipe["fat"].rstrip("g"))
-
-    print("Values after:")
-    print("daily_calories:", session["daily_calories"])
-    print("daily_protein_grams:", session["daily_protein_grams"])
-    print("daily_carbs_grams:", session["daily_carbs_grams"])
-    print("daily_fats_grams:", session["daily_fats_grams"])

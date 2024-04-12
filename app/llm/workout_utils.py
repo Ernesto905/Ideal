@@ -1,11 +1,12 @@
-def workout_user_msg(session) -> str:
+def workout_user_msg(session, typeOfWorkout) -> str:
     user_msg = f""" 
     I am {session['age']} years old 
     I am a {session['sex']} 
     I currently weighs {session['current_weight']} pounds, 
     I am {session['height']} cm tall, 
-    I have the following physical impediments: {session['physical_impediments']}, 
-    My Weight goal is {session['ideal_weight']} pounds 
+    {f"I have the following physical impediments: {session['physical_impediments']}" if session.get("physical_impediments") else ""}, 
+    My Weight goal is {session['ideal_weight']} pounds,
+    You will only suggest workouts of type {typeOfWorkout},
     My body goal is: {session['body_goal']}"""
 
     user_message = {"role": "user", "content": user_msg}
@@ -16,7 +17,7 @@ def workout_user_msg(session) -> str:
 def workout_system_msg() -> str:
     system_msg = """
     You are an expert in exercise science designed to output workout plans in JSON.
-    You will take in user input and output the exercises in the exact following format:
+    You will take in user input and output the exercises in the exact following format, with the exact same order of days of the week:
     ---
       {
       "week": {

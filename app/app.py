@@ -65,15 +65,45 @@ def get_nutrients():
 
 
 # Backend routes
-@app.route("/generate-workout", methods=["GET"])
+@app.route("/generate_workout_composite", methods=["GET"])
 def generate_workout():
 
     # For when save money
     if saveApi:
         return {}
 
-    workout_list = complete_workout(session)
-    return render_template("dashboard/workout.html", workout=workout_list)
+    # Work with tabs
+    if session.get("workout_composite"):
+        return render_template(
+            "dashboard/workout.html", workout=session["workout_composite"]
+        )
+
+    session["workout_composite"] = complete_workout(session, "All kinds of exercises")
+    return render_template(
+        "dashboard/workout.html", workout=session["workout_composite"]
+    )
+
+
+@app.route("/generate_workout_weights", methods=["GET"])
+def generate_workout_weights():
+
+    # For when save money
+    if saveApi:
+        return {}
+
+    session["workout_weights"] = complete_workout(session, "weight lifiting")
+    return render_template("dashboard/workout.html", workout=session["workout_weights"])
+
+
+@app.route("/generate_workout_cardio", methods=["GET"])
+def generate_workout_cardio():
+
+    # For when save money
+    if saveApi:
+        return {}
+
+    session["workout_cardio"] = complete_workout(session, "Cardio")
+    return render_template("dashboard/workout.html", workout=session["workout_cardio"])
 
 
 @app.route("/generate-recipes", methods=["GET"])

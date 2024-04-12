@@ -156,20 +156,70 @@ h1, h2, h3, h4, h5, h6 {
   <div class="col">
     <div class="card">
       <div class="card-header">
+        {# NEW #}
         <h4 class="mb-0">Active Workout Regiment</h4>
-      </div>
-      <div class="card-body" style="height: 50vh; overflow-y: auto;">
+        <nav>
+          <div class="nav nav-tabs" id="nav-tab" role="tablist">
+            <button class="nav-link active" id="nav-full-tab" data-bs-toggle="tab" data-bs-target="#nav-full" type="button" role="tab" aria-controls="nav-full" aria-selected="true">Full Body</button>
+            <button class="nav-link" id="nav-weights-tab" data-bs-toggle="tab" data-bs-target="#nav-weights" type="button" role="tab" aria-controls="nav-weights" aria-selected="false">Weights</button>
+            <button class="nav-link" id="nav-cardio-tab" data-bs-toggle="tab" data-bs-target="#nav-cardio" type="button" role="tab" aria-controls="nav-cardio" aria-selected="false">Cardio</button>
+          </div>
+        </nav>
 
-        <div id="workout-container">
-          <div hx-get="/generate-workout" hx-trigger="load" hx-target="#workout-container" hx-indicator=".spinner-border">
-            <div class="text-center">
-              <div class="spinner-border text-success" role="status">
-                <span class="visually-hidden">Loading...</span>
+        <div class="card-body" style="height: 50vh; overflow-y: auto;">
+          <div class="tab-content" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="nav-full" role="tabpanel" aria-labelledby="nav-full-tab" tabindex="0">
+
+              <div id="workout-container-composite">
+                <div hx-get="/generate_workout_composite" hx-trigger="load" hx-target="#workout-container-composite" hx-indicator=".spinner-border">
+                  <div class="text-center">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">loading...</span>
+                    </div>
+                    <p class="mt-2">loading your full body fitness regime...</p>
+                  </div>
+                </div>
               </div>
-              <p class="mt-2">Loading Gainz...</p>
+
             </div>
+            <div class="tab-pane fade" id="nav-weights" role="tabpanel" aria-labelledby="nav-weights-tab" tabindex="0">
+
+              <div id="workout-container-weights">
+                <div hx-get="/generate_workout_weights" hx-trigger="load" hx-target="#workout-container-weights" hx-indicator=".spinner-border">
+                  <div class="text-center">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">loading...</span>
+                    </div>
+                    <p class="mt-2">loading your weight lifting regime...</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            <div class="tab-pane fade" id="nav-cardio" role="tabpanel" aria-labelledby="nav-cardio-tab" tabindex="0">
+
+              <div id="workout-container-cardio">
+                <div hx-get="/generate_workout_cardio" hx-trigger="load" hx-target="#workout-container-cardio" hx-indicator=".spinner-border">
+                  <div class="text-center">
+                    <div class="spinner-border text-success" role="status">
+                      <span class="visually-hidden">loading...</span>
+                    </div>
+                    <p class="mt-2">loading your cardio workout regime...</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
           </div>
         </div>
+        {# NEW END #}
+
+
+
+        {# OLD #}
+      {# End here #}
 
       </div>
     </div>

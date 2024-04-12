@@ -96,8 +96,9 @@ def complete_nutrition(session):
     return response
 
 
-def complete_workout(session):
-    user_message = workout_user_msg(session)
+def complete_workout(session, typeOfWorkout):
+    user_message = workout_user_msg(session, typeOfWorkout)
+
     system_message = workout_system_msg()
     valid_json = False
     while not valid_json:
@@ -108,6 +109,14 @@ def complete_workout(session):
             temperature=0.5,
         )
         valid_json = is_json(response.choices[0].message.content)
+    print("---------------------------------------------------------------")
+    print(
+        "THE RESPONSE FOR THE ",
+        typeOfWorkout,
+        "EXERCISE IS: ",
+        response.choices[0].message.content,
+    )
+    print("---------------------------------------------------------------")
     return json.loads(response.choices[0].message.content)
 
 
