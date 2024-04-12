@@ -25,6 +25,8 @@ load_dotenv()
 app = Flask(__name__)
 app.config["SECRET_KEY"] = os.getenv("SESSIONS_SECRET")
 
+saveApi = False
+
 
 # Frontend routes
 @app.route("/")
@@ -67,7 +69,8 @@ def get_nutrients():
 def generate_workout():
 
     # For when save money
-    return {}
+    if saveApi:
+        return {}
 
     workout_list = complete_workout(session)
     return render_template("dashboard/workout.html", workout=workout_list)
@@ -77,7 +80,8 @@ def generate_workout():
 def generate_recipes():
 
     # for when no api
-    # return {}
+    if saveApi:
+        return {}
 
     recipes_list = display_recipes_grid(session)
     return render_template("dashboard/recipes.html", data=recipes_list)
