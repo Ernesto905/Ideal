@@ -104,19 +104,15 @@ h1, h2, h3, h4, h5, h6 {
                 <div id="nutrients_list" hx-trigger="load" hx-get="/get_nutrients" hx-target="#nutrients_left">
                 </div>
               </div>
-
-
-
-
-              <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModal">
-                Edit Nutrients
+              <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#nutritionModal">
+                Edit Nutrition
               </button>
-
-              <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                <div class="modal-dialog" role="document">
+              <div class="modal fade" id="nutritionModal" tabindex="-1" aria-labelledby="nutritionModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
                   <div class="modal-content">
                     <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Edit Nutrients</h5>
+                      <h1 class="modal-title fs-5" id="nutritionModalLabel">Edit Nutritional Values</h1>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
 
@@ -140,18 +136,14 @@ h1, h2, h3, h4, h5, h6 {
                         </div>
 
                         <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                          <button type="submit" hx-post="/userInputNutrients" class="btn btn-primary" data-dismiss="modal" hx-trigger="click" hx-target="#nutrients_left">Save changes</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                          <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" hx-post="/userInputNutrients" hx-trigger="click" hx-target="#nutrients_left">Save changes</button>
                         </div>
                       </form>
-
                     </div>
                   </div>
                 </div>
               </div>
-
-
-
 
             </div>
           </div>

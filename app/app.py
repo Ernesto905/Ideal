@@ -67,7 +67,7 @@ def get_nutrients():
 def generate_workout():
 
     # For when save money
-    # return {}
+    return {}
 
     workout_list = complete_workout(session)
     return render_template("dashboard/workout.html", workout=workout_list)
@@ -135,6 +135,7 @@ def update_nutrients():
 
 @app.route("/userInputNutrients", methods=["POST"])
 def userInputNutrients():
+    print("values are ", request.form.get("calories"))
     session["daily_calories"] = int(request.form.get("calories"))
     session["daily_protein_grams"] = int(request.form.get("protein"))
     session["daily_carbs_grams"] = int(request.form.get("carbohydrates"))

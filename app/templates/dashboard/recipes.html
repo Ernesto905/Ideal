@@ -13,7 +13,7 @@
             <div class="mt-auto">
               <div class="d-flex justify-content-between">
                 <button type="button" class="btn btn-success btn-sm" hx-target="#nutrients_left" hx-post="/update_nutrients?recipe_id={{ recipe.id }}" hx-trigger="click">Eat me!</button>
-                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#exampleModalCenter" hx-get="/recipes?recipe_id={{ recipe.id }}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
+                <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#recipeModal" hx-get="/recipes?recipe_id={{ recipe.id }}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
               </div>
             </div>
           </div>
@@ -26,25 +26,22 @@
 </div>
 
 {# Recipe Modal #}
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-  <div class="modal-dialog modal-xl modal-dialog-centered" role="document">
-
+<div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="recipeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLongTitle">Recipe Details</h5>
+        <h1 class="modal-title fs-5" id="recipeModalLabel">Recipe Details</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body" id="recipe-modal-body">
         ...
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 </div>
-
-
 
 
 <style>

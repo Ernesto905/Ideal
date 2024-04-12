@@ -85,6 +85,7 @@
     border-color: #007bff;
     box-shadow: 0 0 0 2px #007bff;
   }
+  
 </style>
 <div class="row justify-content-center">
   <div class="col-md-8">
@@ -143,22 +144,34 @@
                   </select>
                 </div>
 
-                  <div class="col">
-                    <label for="diet" class="form-label">Present diet</label>
-                    <select class="form-control" id="diet" name="diet">
-                      <option value="">Select a diet</option>
-                      <option value="Gluten Free">Gluten Free</option>
-                      <option value="Ketogenic">Ketogenic</option>
-                      <option value="Vegetarian">Vegetarian</option>
-                      <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
-                      <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
-                      <option value="Vegan">Vegan</option>
-                      <option value="Pescetarian">Pescetarian</option>
-                      <option value="Paleo">Paleo</option>
-                      <option value="Primal">Primal</option>
-                      <option value="Whole30">Whole30</option>
-                    </select>
-                  </div>
+                <div class="col">
+                  <label for="diet" class="form-label">Preferred <a class="link-success link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover" data-bs-toggle="modal" data-bs-target="#dietModal">diet</a></label>
+                  
+
+
+                  <select class="form-control" id="diet" name="diet">
+                    <option value="">Select a diet</option>
+                    <option value="Gluten Free">Gluten Free</option>
+                    <option value="Ketogenic">Ketogenic</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Lacto-Vegetarian">Lacto-Vegetarian</option>
+                    <option value="Ovo-Vegetarian">Ovo-Vegetarian</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="Pescetarian">Pescetarian</option>
+                    <option value="Paleo">Paleo</option>
+                    <option value="Primal">Primal</option>
+                    <option value="Whole30">Whole30</option>
+                  </select>
+                </div>
+
+
+
+
+
+
+
+
+
 
                 </div>
               </div>
@@ -256,6 +269,88 @@
     </div>
   </div>
 </div>
+
+
+{# Help with diet #}
+<div class="modal fade" id="dietModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Diet explanations</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      <ol class="list-group">
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Gluten Free</div>
+            Excludes gluten, a protein found in wheat, barley, and rye, suitable for those with gluten intolerance or celiac disease.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Ketogenic</div>
+            Focuses on high-fat, adequate-protein, low-carbohydrate foods that help the body enter a metabolic state called ketosis.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Vegetarian</div>
+            Excludes meat and fish, but may include dairy products and eggs depending on personal preference.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Lacto-Vegetarian</div>
+            Includes dairy products but excludes eggs, meat, and fish.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Ovo-Vegetarian</div>
+            Includes eggs but excludes dairy products, meat, and fish.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Vegan</div>
+            Excludes all animal products including dairy, eggs, and honey.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Pescetarian</div>
+            Includes fish but excludes other meats, often also includes dairy and eggs.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Paleo</div>
+            Focuses on foods presumed to be available to Paleolithic humans, such as lean meats, fish, fruits, vegetables, nuts, and seeds.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Primal</div>
+            Similar to Paleo but allows some dairy; focuses on whole, unprocessed foods.
+          </div>
+        </li>
+        <li class="list-group-item d-flex justify-content-between align-items-start">
+          <div class="ms-2 me-auto">
+            <div class="fw-bold">Whole30</div>
+            A 30-day diet that emphasizes whole foods and the elimination of sugar, alcohol, grains, legumes, soy, and dairy.
+          </div>
+        </li>
+
+      </ol>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
 
 <script>
   document.addEventListener('DOMContentLoaded', function () {
