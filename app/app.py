@@ -137,7 +137,7 @@ def generate():
                         <button type="button" class="btn btn-success" hx-target="#nutrients_left" hx-post="/update_nutrients?recipe_id={recipeId}" hx-trigger="click">Eat me!</button>
                     </div>
                     <div class="col-6 d-flex justify-content-start pl-2">
-                        <button type="button" class="btn btn-success" data-toggle="modal" data-target="#exampleModalCenter" hx-get="/recipes?recipe_id={recipeId}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
+                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#recipeModal" hx-get="/recipes?recipe_id={recipeId}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
                     </div>
                 </div>
             </div>
