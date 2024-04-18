@@ -17,7 +17,7 @@ def workout_user_msg(session, typeOfWorkout) -> str:
 def workout_system_msg() -> str:
     system_msg = """
     You are an expert in exercise science designed to output workout plans in JSON.
-    You will take in user input and output the exercises in the exact following format, with the exact same order of days of the week:
+    You will take in user input and output the exercises in the exact following format, with the exact same order of days of the week. Keep in mind the pysical impediments. No exercise should involve any injured body part:
     ---
       {
       "week": {

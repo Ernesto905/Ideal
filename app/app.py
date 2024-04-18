@@ -9,7 +9,6 @@ import markdown
 from llm.nutrition_functions import main
 from llm.openai_utils import (
     complete_workout,
-    get_completion,
 )
 from llm.calculations import calculate_daily_recommendations, count_nutrients
 from llm.recipe_utils import (
@@ -65,22 +64,22 @@ def get_nutrients():
 
 
 # Backend routes
-@app.route("/generate_workout_composite", methods=["GET"])
-def generate_workout():
+@app.route("/generate_workout_calisthenics", methods=["GET"])
+def generate_workout_calisthenics():
 
     # For when save money
     if saveApi:
         return {}
 
     # Work with tabs
-    if session.get("workout_composite"):
-        return render_template(
-            "dashboard/workout.html", workout=session["workout_composite"]
-        )
+    # if session.get("workout_calisthenics"):
+    #     return render_template(
+    #         "dashboard/workout.html", workout=session["workout_calisthenics"]
+    #     )
 
-    session["workout_composite"] = complete_workout(session, "All kinds of exercises")
+    session["workout_calisthenics"] = complete_workout(session, "Calisthenics")
     return render_template(
-        "dashboard/workout.html", workout=session["workout_composite"]
+        "dashboard/workout.html", workout=session["workout_calisthenics"]
     )
 
 
@@ -137,7 +136,7 @@ def generate():
                         <button type="button" class="btn btn-success" hx-target="#nutrients_left" hx-post="/update_nutrients?recipe_id={recipeId}" hx-trigger="click">Eat me!</button>
                     </div>
                     <div class="col-6 d-flex justify-content-start pl-2">
-                      <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#recipeModal" hx-get="/recipes?recipe_id={recipeId}" hx-target="#recipe-modal-body" hx-trigger="click">Show Recipe Details</button>
+
                     </div>
                 </div>
             </div>
