@@ -26,8 +26,7 @@ app.config["SECRET_KEY"] = os.getenv("SESSIONS_SECRET")
 
 saveApi = False
 
-
-# Frontend routes
+"""Frontend routes"""
 @app.route("/")
 def home():
     return render_template("home/index.html")
@@ -63,19 +62,13 @@ def get_nutrients():
     return render_template("dashboard/nutrients_left.html")
 
 
-# Backend routes
+"""Backend routes"""
 @app.route("/generate_workout_calisthenics", methods=["GET"])
 def generate_workout_calisthenics():
 
     # For when save money
     if saveApi:
         return {}
-
-    # Work with tabs
-    # if session.get("workout_calisthenics"):
-    #     return render_template(
-    #         "dashboard/workout.html", workout=session["workout_calisthenics"]
-    #     )
 
     session["workout_calisthenics"] = complete_workout(session, "Calisthenics")
     return render_template(
@@ -97,7 +90,6 @@ def generate_workout_weights():
 @app.route("/generate_workout_cardio", methods=["GET"])
 def generate_workout_cardio():
 
-    # For when save money
     if saveApi:
         return {}
 
@@ -108,7 +100,6 @@ def generate_workout_cardio():
 @app.route("/generate-recipes", methods=["GET"])
 def generate_recipes():
 
-    # for when no api
     if saveApi:
         return {}
 
@@ -123,12 +114,10 @@ def generate():
         user_input = request.form["user_input"]
         response, recipeId = main(
             session["allergies"], session["diet"], session["religion"], user_input
-        )  # Wrap the response in a Bootstrap card component
+        )  
 
         md_template_string = markdown.markdown(response, output_format="html")
-        # return md_template_string
         return f"""
-
             <div class="container mt-3 justify-content-center"> 
                 <div id='chat-response' class='mb-3 justify-content-center'>{md_template_string}</div>
                 <div class="row mb-3">

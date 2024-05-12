@@ -65,10 +65,8 @@ def display_recipes_grid(session):
         "dessert": response_dessert.json(),
     }
 
-    # Account for religion. This will be slow, but it's async
+    # Account for religion. 
     if session["religion"]:
-        print("religion detected")
-        print("Recipe before: ", recipes)
         recipes = touch_of_god(recipes, session["religion"])
 
     return recipes
@@ -124,8 +122,6 @@ def touch_of_god(recipes, religion):
         )
         print("Inside json, so far we have a response of", response)
         valid_json = is_json(response.choices[0].message.content)
-    print("------------------------------------")
-    print("Recipe after: ", response.choices[0].message.content)
     return json.loads(response.choices[0].message.content)
 
 

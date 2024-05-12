@@ -87,10 +87,6 @@ def complete_nutrition(session):
     Recite to me what my diet, allergies, and religion are.
     """
     messages = [{"role": "user", "content": msg}]
-
-    # To be implemented with tools
-    # tools = initialize_tools()
-    # response = get_completion(messages, tools=tools)
     response = get_completion(messages)
 
     return response
@@ -109,14 +105,6 @@ def complete_workout(session, typeOfWorkout):
             temperature=0.5,
         )
         valid_json = is_json(response.choices[0].message.content)
-    print("---------------------------------------------------------------")
-    print(
-        "THE RESPONSE FOR THE ",
-        typeOfWorkout,
-        "EXERCISE IS: ",
-        response.choices[0].message.content,
-    )
-    print("---------------------------------------------------------------")
     return json.loads(response.choices[0].message.content)
 
 
